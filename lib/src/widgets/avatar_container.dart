@@ -40,10 +40,7 @@ class AvatarContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final constraints = this.constraints ??
-        BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height,
-            maxWidth: MediaQuery.of(context).size.width);
+    final constraints = this.constraints ?? BoxConstraints(maxHeight: MediaQuery.of(context).size.height, maxWidth: MediaQuery.of(context).size.width);
 
     return GestureDetector(
       onTap: () => onPress?.call(user),
@@ -62,10 +59,7 @@ class AvatarContainer extends StatelessWidget {
                       maxHeight: avatarMaxSize!,
                     ),
                     color: Colors.grey,
-                    child: Center(
-                        child: Text(user.name == null || user.name!.isEmpty
-                            ? ''
-                            : user.name![0])),
+                    child: Center(child: Text(user.name == null || user.name!.isEmpty ? '' : user.name![0])),
                   ),
                 ),
                 user.avatar != null && user.avatar!.isNotEmpty

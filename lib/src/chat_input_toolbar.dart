@@ -109,10 +109,11 @@ class ChatInputToolbar extends StatelessWidget {
                         bool? isFocused,
                       }) =>
                           null,
-                      decoration: inputDecoration ?? const InputDecoration.collapsed(
-                        hintText: '',
-                        fillColor: Colors.white,
-                      ),
+                      decoration: inputDecoration ??
+                          const InputDecoration.collapsed(
+                            hintText: '',
+                            fillColor: Colors.white,
+                          ),
                       textCapitalization: textCapitalization!,
                       controller: controller,
                       style: inputTextStyle,
@@ -139,9 +140,7 @@ class ChatInputToolbar extends StatelessWidget {
               else
                 IconButton(
                   icon: const Icon(Icons.send),
-                  onPressed: alwaysShowSend || text!.isNotEmpty
-                      ? () => _sendMessage(context, message)
-                      : null,
+                  onPressed: alwaysShowSend || text!.isNotEmpty ? () => _sendMessage(context, message) : null,
                 ),
               if (!showTrailingBeforeSend) ...trailing,
             ],

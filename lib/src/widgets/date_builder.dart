@@ -14,8 +14,7 @@ class DateBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return customDateBuilder?.call(dateFormat?.format(date) ??
-            DateFormat('yyyy-MM-dd').format(date)) ??
+    return customDateBuilder?.call(dateFormat?.format(date) ?? DateFormat('yyyy-MM-dd').format(date)) ??
         Container(
           decoration: BoxDecoration(
             color: Colors.grey,
@@ -29,9 +28,7 @@ class DateBuilder extends StatelessWidget {
           ),
           margin: const EdgeInsets.symmetric(vertical: 10.0),
           child: Text(
-            dateFormat != null
-                ? dateFormat!.format(date)
-                : DateFormat('yyyy-MMM-dd').format(date),
+            dateFormat != null ? dateFormat!.format(date) : DateFormat('yyyy-MMM-dd').format(date),
             style: const TextStyle(
               color: Colors.white,
               fontSize: 12.0,

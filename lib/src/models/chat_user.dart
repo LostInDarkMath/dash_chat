@@ -44,10 +44,8 @@ class ChatUser {
   }
 
   ChatUser.fromJson(Map<dynamic, dynamic> json) {
-    final pName = json['name'] as String?;
-
     uid = json['uid'] as String?;
-    name = pName ?? '$firstName $lastName';
+    name = (json['name'] as String?) ?? '$firstName $lastName';
     firstName = json['firstName'] as String?;
     lastName = json['lastName'] as String?;
     avatar = json['avatar'] as String?;

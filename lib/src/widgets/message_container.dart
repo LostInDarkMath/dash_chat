@@ -87,10 +87,7 @@ class MessageContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final constraints = this.constraints ??
-        BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height,
-            maxWidth: MediaQuery.of(context).size.width);
+    final constraints = this.constraints ?? BoxConstraints(maxHeight: MediaQuery.of(context).size.height, maxWidth: MediaQuery.of(context).size.width);
     return ConstrainedBox(
       constraints: BoxConstraints(
         maxWidth: constraints.maxWidth * 0.8,
@@ -101,10 +98,7 @@ class MessageContainer extends StatelessWidget {
               color: message.user.containerColor ?? messageContainerDecoration!.color,
             ) ??
             BoxDecoration(
-              color: message.user.containerColor ??
-                  (isUser
-                      ? Theme.of(context).colorScheme.secondary
-                      : const Color.fromRGBO(225, 225, 225, 1)),
+              color: message.user.containerColor ?? (isUser ? Theme.of(context).colorScheme.secondary : const Color.fromRGBO(225, 225, 225, 1)),
               borderRadius: BorderRadius.circular(5.0),
             ),
         margin: const EdgeInsets.only(
@@ -113,48 +107,35 @@ class MessageContainer extends StatelessWidget {
         padding: messagePadding,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment:
-              isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          crossAxisAlignment: isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: <Widget>[
-            if (textBeforeImage)
-              _buildMessageText()
-            else
-              _buildMessageImage(),
-            if (textBeforeImage)
-              _buildMessageImage()
-            else
-              _buildMessageText(),
+            if (textBeforeImage) _buildMessageText() else _buildMessageImage(),
+            if (textBeforeImage) _buildMessageImage() else _buildMessageText(),
             if (buttons != null)
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment:
-                    isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+                mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: buttons!,
               )
             else if (messageButtonsBuilder != null)
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment:
-                    isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
+                mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
                 children: messageButtonsBuilder!(message),
                 mainAxisSize: MainAxisSize.min,
               ),
             messageTimeBuilder?.call(
-                  timeFormat?.format(message.createdAt) ??
-                      DateFormat('HH:mm:ss').format(message.createdAt),
+                  timeFormat?.format(message.createdAt) ?? DateFormat('HH:mm:ss').format(message.createdAt),
                   message,
                 ) ??
                 Padding(
                   padding: const EdgeInsets.only(top: 5.0),
                   child: Text(
-                    timeFormat != null
-                        ? timeFormat!.format(message.createdAt)
-                        : DateFormat('HH:mm:ss').format(message.createdAt),
+                    timeFormat != null ? timeFormat!.format(message.createdAt) : DateFormat('HH:mm:ss').format(message.createdAt),
                     style: TextStyle(
                       fontSize: 10.0,
-                      color: message.user.color ??
-                          (isUser ? Colors.white70 : Colors.black87),
+                      color: message.user.color ?? (isUser ? Colors.white70 : Colors.black87),
                     ),
                   ),
                 )
@@ -170,8 +151,7 @@ class MessageContainer extends StatelessWidget {
           parse: parsePatterns,
           text: message.text!,
           style: TextStyle(
-            color: message.user.color ??
-                (isUser ? Colors.white70 : Colors.black87),
+            color: message.user.color ?? (isUser ? Colors.white70 : Colors.black87),
           ),
         );
   }

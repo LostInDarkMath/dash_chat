@@ -44,8 +44,7 @@ class MessageListView extends StatefulWidget {
     this.constraints,
     this.onLoadEarlier,
     required this.defaultLoadCallback,
-    this.messageContainerPadding =
-        const EdgeInsets.only(top: 10.0, right: 10.0, left: 10.0),
+    this.messageContainerPadding = const EdgeInsets.only(top: 10.0, right: 10.0, left: 10.0),
     this.scrollController,
     this.parsePatterns = const [],
     this.messageContainerDecoration,
@@ -75,7 +74,7 @@ class MessageListView extends StatefulWidget {
     this.textBeforeImage = true,
     this.messageDecorationBuilder,
     Key? key,
-  }) :super(key: key);
+  }) : super(key: key);
 
   @override
   _MessageListViewState createState() => _MessageListViewState();
@@ -85,8 +84,7 @@ class _MessageListViewState extends State<MessageListView> {
   double previousPixelPosition = 0.0;
 
   bool scrollNotificationFunc(ScrollNotification scrollNotification) {
-    double bottom =
-        widget.inverted ? 0.0 : scrollNotification.metrics.maxScrollExtent;
+    double bottom = widget.inverted ? 0.0 : scrollNotification.metrics.maxScrollExtent;
 
     if (scrollNotification.metrics.pixels == bottom) {
       if (widget.visible!) {
@@ -105,11 +103,9 @@ class _MessageListViewState extends State<MessageListView> {
       return true;
     }
     if (!widget.inverted && index + 1 < widget.messages.length) {
-      return widget.messages[index + 1].user.uid !=
-          widget.messages[index].user.uid;
+      return widget.messages[index + 1].user.uid != widget.messages[index].user.uid;
     } else if (widget.inverted && index - 1 >= 0) {
-      return widget.messages[index - 1].user.uid !=
-          widget.messages[index].user.uid;
+      return widget.messages[index - 1].user.uid != widget.messages[index].user.uid;
     }
     return true;
   }
@@ -118,10 +114,7 @@ class _MessageListViewState extends State<MessageListView> {
   Widget build(BuildContext context) {
     DateTime? currentDate;
 
-    final constraints = widget.constraints ??
-        BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height,
-            maxWidth: MediaQuery.of(context).size.width);
+    final constraints = widget.constraints ?? BoxConstraints(maxHeight: MediaQuery.of(context).size.height, maxWidth: MediaQuery.of(context).size.width);
 
     return Flexible(
       child: GestureDetector(
@@ -161,14 +154,11 @@ class _MessageListViewState extends State<MessageListView> {
 
                     if (currentDate == null) {
                       currentDate = messageDate;
-                      showDate =
-                          !widget.inverted || widget.messages.length == 1;
-                    } else if (currentDate!.difference(messageDate).inDays !=
-                        0) {
+                      showDate = !widget.inverted || widget.messages.length == 1;
+                    } else if (currentDate!.difference(messageDate).inDays != 0) {
                       showDate = true;
                       currentDate = messageDate;
-                    } else if (i == widget.messages.length - 1 &&
-                        widget.inverted) {
+                    } else if (i == widget.messages.length - 1 && widget.inverted) {
                       showDate = true;
                     } else {
                       showDate = false;
@@ -177,13 +167,9 @@ class _MessageListViewState extends State<MessageListView> {
                     return Align(
                       child: Column(
                         children: <Widget>[
-                          if (showDate &&
-                              (!widget.inverted ||
-                                  widget.messages.length == 1 ||
-                                  (last && widget.inverted)))
+                          if (showDate && (!widget.inverted || widget.messages.length == 1 || (last && widget.inverted)))
                             DateBuilder(
-                              date:
-                                  widget.inverted ? previousDate : currentDate!,
+                              date: widget.inverted ? previousDate : currentDate!,
                               customDateBuilder: widget.dateBuilder,
                               dateFormat: widget.dateFormat,
                             ),
@@ -193,10 +179,7 @@ class _MessageListViewState extends State<MessageListView> {
                               bottom: last ? 10.0 : 0.0,
                             ),
                             child: Row(
-                              mainAxisAlignment:
-                                  widget.messages[i].user.uid == widget.user.uid
-                                      ? MainAxisAlignment.end
-                                      : MainAxisAlignment.start,
+                              mainAxisAlignment: widget.messages[i].user.uid == widget.user.uid ? MainAxisAlignment.end : MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: <Widget>[
                                 Padding(
@@ -204,13 +187,7 @@ class _MessageListViewState extends State<MessageListView> {
                                     horizontal: constraints.maxWidth * 0.02,
                                   ),
                                   child: Opacity(
-                                    opacity:
-                                        (widget.showAvatarForEverMessage! ||
-                                                    showAvatar) &&
-                                                widget.messages[i].user.uid !=
-                                                    widget.user.uid
-                                            ? 1
-                                            : 0,
+                                    opacity: (widget.showAvatarForEverMessage! || showAvatar) && widget.messages[i].user.uid != widget.user.uid ? 1 : 0,
                                     child: AvatarContainer(
                                       user: widget.messages[i].user,
                                       onPress: widget.onPressAvatar,
@@ -224,70 +201,46 @@ class _MessageListViewState extends State<MessageListView> {
                                   child: GestureDetector(
                                     onLongPress: () {
                                       if (widget.onLongPressMessage != null) {
-                                        widget.onLongPressMessage!(
-                                            widget.messages[i]);
+                                        widget.onLongPressMessage!(widget.messages[i]);
                                       } else {
                                         showBottomSheet<void>(
                                             context: context,
                                             builder: (context) => Column(
-                                              mainAxisSize:
-                                                  MainAxisSize.min,
-                                              children: <Widget>[
-                                                ListTile(
-                                                  leading: const Icon(Icons.content_copy),
-                                                  title: const Text('Copy to clipboard'),
-                                                  onTap: () {
-                                                    Clipboard.setData(
-                                                        ClipboardData(
-                                                            text: widget
-                                                                .messages[
-                                                                    i]
-                                                                .text));
-                                                    Navigator.pop(
-                                                        context);
-                                                  },
-                                                )
-                                              ],
-                                            ));
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: <Widget>[
+                                                    ListTile(
+                                                      leading: const Icon(Icons.content_copy),
+                                                      title: const Text('Copy to clipboard'),
+                                                      onTap: () {
+                                                        Clipboard.setData(ClipboardData(text: widget.messages[i].text));
+                                                        Navigator.pop(context);
+                                                      },
+                                                    )
+                                                  ],
+                                                ));
                                       }
                                     },
                                     child: widget.messageBuilder != null
-                                        ? widget
-                                            .messageBuilder!(widget.messages[i])
+                                        ? widget.messageBuilder!(widget.messages[i])
                                         : Align(
-                                            alignment: widget
-                                                        .messages[i].user.uid ==
-                                                    widget.user.uid
+                                            alignment: widget.messages[i].user.uid == widget.user.uid
                                                 ? AlignmentDirectional.centerEnd
-                                                : AlignmentDirectional
-                                                    .centerStart,
+                                                : AlignmentDirectional.centerStart,
                                             child: MessageContainer(
-                                              messagePadding:
-                                                  widget.messagePadding,
+                                              messagePadding: widget.messagePadding,
                                               constraints: constraints,
-                                              isUser:
-                                                  widget.messages[i].user.uid ==
-                                                      widget.user.uid,
+                                              isUser: widget.messages[i].user.uid == widget.user.uid,
                                               message: widget.messages[i],
                                               timeFormat: widget.timeFormat,
-                                              messageImageBuilder:
-                                                  widget.messageImageBuilder,
-                                              messageTextBuilder:
-                                                  widget.messageTextBuilder,
-                                              messageTimeBuilder:
-                                                  widget.messageTimeBuilder,
-                                              messageContainerDecoration: widget
-                                                  .messageContainerDecoration,
-                                              parsePatterns:
-                                                  widget.parsePatterns,
-                                              buttons:
-                                                  widget.messages[i].buttons,
-                                              messageButtonsBuilder:
-                                                  widget.messageButtonsBuilder,
-                                              textBeforeImage:
-                                                  widget.textBeforeImage,
-                                              messageDecorationBuilder: widget
-                                                  .messageDecorationBuilder,
+                                              messageImageBuilder: widget.messageImageBuilder,
+                                              messageTextBuilder: widget.messageTextBuilder,
+                                              messageTimeBuilder: widget.messageTimeBuilder,
+                                              messageContainerDecoration: widget.messageContainerDecoration,
+                                              parsePatterns: widget.parsePatterns,
+                                              buttons: widget.messages[i].buttons,
+                                              messageButtonsBuilder: widget.messageButtonsBuilder,
+                                              textBeforeImage: widget.textBeforeImage,
+                                              messageDecorationBuilder: widget.messageDecorationBuilder,
                                             ),
                                           ),
                                   ),
@@ -298,13 +251,7 @@ class _MessageListViewState extends State<MessageListView> {
                                       horizontal: constraints.maxWidth * 0.02,
                                     ),
                                     child: Opacity(
-                                      opacity:
-                                          (widget.showAvatarForEverMessage! ||
-                                                      showAvatar) &&
-                                                  widget.messages[i].user.uid ==
-                                                      widget.user.uid
-                                              ? 1
-                                              : 0,
+                                      opacity: (widget.showAvatarForEverMessage! || showAvatar) && widget.messages[i].user.uid == widget.user.uid ? 1 : 0,
                                       child: AvatarContainer(
                                         user: widget.messages[i].user,
                                         onPress: widget.onPressAvatar,
@@ -321,13 +268,9 @@ class _MessageListViewState extends State<MessageListView> {
                               ],
                             ),
                           ),
-                          if (showDate &&
-                              widget.inverted &&
-                              widget.messages.length > 1 &&
-                              !last)
+                          if (showDate && widget.inverted && widget.messages.length > 1 && !last)
                             DateBuilder(
-                              date:
-                                  widget.inverted ? previousDate : currentDate!,
+                              date: widget.inverted ? previousDate : currentDate!,
                               customDateBuilder: widget.dateBuilder,
                               dateFormat: widget.dateFormat,
                             ),

@@ -1,6 +1,17 @@
+# This is a fork a the famous [DashChat library](https://github.com/fayeed/dash_chat)
+It is no longer maintained and the other forks do not seem to be as reliable as the original library.
+Therefore I created my own fork to add the feature that I want.
+Thanks to [Fayeed](https://github.com/fayeed) who created the v1 of this package: https://github.com/fayeed/dash_chat and made that possible!
+
 ## Usage 💻
 
 To use this package, add `dash_chat` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
+```yaml
+dependencies:
+  new_version:
+    git:
+    url: https://github.com/LostInDarkMath/dash_chat.git
+```
 
 ## Features 🔮
 
@@ -12,7 +23,6 @@ To use this package, add `dash_chat` as a [dependency in your pubspec.yaml file]
 - Quick Reply messages
 - Load earlier messages
 - Scroll to bottom Widget
-- Composer actions (to attach photos, etc.) - WIP
 
 ### Message object 📦
 
@@ -165,23 +175,10 @@ ChatMessage(
   );
   ```
 
-## Credits 👨🏻‍💻
-
-- Transparent Image - [Brian Egan](https://github.com/brianegan)
-- uuid - [Yulian Kuncheff](https://github.com/Daegalus)
-
-## Found this project useful? ❤️
-
-If you found this project useful, then please consider giving it a ⭐️ on Github and sharing it with your friends via social media.
-
 ## License ⚖️
 
-- [MIT](https://github.com/fayeed/dash_chat/blob/master/LICENSE)
-
-## API details 📝
-
-See the [dash_chat.dart](https://github.com/fayeed/dash_chat/blob/master/lib/dash_chat.dart) for more API details
+- [MIT](https://github.com/LostInDarkMath/dash_chat/blob/master/LICENSE)
 
 ## Issues and feedback 💭
 
-If you have any suggestion for including a feature or if something doesn't work, feel free to open a Github [issue](https://github.com/fayeed/dash_chat/issues) for us to have a discussion on it.
+If you have any suggestion for including a feature or if something doesn't work, feel free to open a Github [issue](https://github.com/LostInDarkMath/dash_chat/issues) for us to have a discussion on it.

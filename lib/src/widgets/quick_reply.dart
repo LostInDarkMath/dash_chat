@@ -25,10 +25,7 @@ class QuickReply extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final constraints = this.constraints ??
-        BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height,
-            maxWidth: MediaQuery.of(context).size.width);
+    final constraints = this.constraints ?? BoxConstraints(maxHeight: MediaQuery.of(context).size.height, maxWidth: MediaQuery.of(context).size.width);
     return GestureDetector(
       onTap: () {
         onReply?.call(reply);
@@ -39,8 +36,7 @@ class QuickReply extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
             decoration: quickReplyStyle ??
                 BoxDecoration(
-                  border: Border.all(
-                      width: 1.0, color: Theme.of(context).colorScheme.secondary),
+                  border: Border.all(width: 1.0, color: Theme.of(context).colorScheme.secondary),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
             constraints: BoxConstraints(maxWidth: constraints.maxWidth / 3),

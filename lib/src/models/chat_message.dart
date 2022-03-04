@@ -63,9 +63,7 @@ class ChatMessage {
     video = json['video'] as String?;
     createdAt = DateTime.fromMillisecondsSinceEpoch(json['createdAt'] as int);
     user = ChatUser.fromJson(json['user'] as Map<String, dynamic>);
-    quickReplies = json['quickReplies'] != null
-      ? QuickReplies.fromJson(json['quickReplies'] as Map<String, dynamic>)
-      : null;
+    quickReplies = json['quickReplies'] != null ? QuickReplies.fromJson(json['quickReplies'] as Map<String, dynamic>) : null;
     customProperties = json['customProperties'] as Map<String, dynamic>?;
   }
 
