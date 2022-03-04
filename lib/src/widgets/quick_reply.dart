@@ -20,7 +20,8 @@ class QuickReply extends StatelessWidget {
     this.constraints,
     this.onReply,
     required this.reply,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +35,12 @@ class QuickReply extends StatelessWidget {
       },
       child: quickReplyBuilder?.call(reply) ??
           Container(
-            margin:
-                EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0, bottom: 10.0),
-            padding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+            margin: const EdgeInsets.only(left: 5.0, right: 5.0, top: 5.0, bottom: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
             decoration: quickReplyStyle ??
                 BoxDecoration(
                   border: Border.all(
-                      width: 1.0, color: Theme.of(context).accentColor),
+                      width: 1.0, color: Theme.of(context).colorScheme.secondary),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
             constraints: BoxConstraints(maxWidth: constraints.maxWidth / 3),
@@ -48,7 +48,7 @@ class QuickReply extends StatelessWidget {
               reply.title,
               style: quickReplyTextStyle ??
                   TextStyle(
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     fontSize: 12.0,
                   ),
             ),

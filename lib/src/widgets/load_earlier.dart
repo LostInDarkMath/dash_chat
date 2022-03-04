@@ -18,14 +18,14 @@ class LoadEarlierWidget extends StatelessWidget {
         defaultLoadCallback(false);
       },
       child: Container(
-        padding: EdgeInsets.symmetric(
+        padding: const EdgeInsets.symmetric(
           horizontal: 12.0,
           vertical: 5.0,
         ),
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20.0),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 spreadRadius: 1.0,
                 blurRadius: 5.0,
@@ -34,7 +34,7 @@ class LoadEarlierWidget extends StatelessWidget {
               )
             ]),
         child: Text(
-          "Load Earlier Messages",
+          'Load Earlier Messages',
           style: TextStyle(
             color: Theme.of(context).primaryColor,
           ),

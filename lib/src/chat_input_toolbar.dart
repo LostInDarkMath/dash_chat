@@ -7,7 +7,7 @@ class ChatInputToolbar extends StatelessWidget {
   final TextCapitalization? textCapitalization;
   final BoxDecoration? inputContainerStyle;
   final List<Widget> leading;
-  final List<Widget> trailling;
+  final List<Widget> trailing;
   final int inputMaxLines;
   final int? maxInputLength;
   final bool alwaysShowSend;
@@ -23,7 +23,7 @@ class ChatInputToolbar extends StatelessWidget {
   final double inputCursorWidth;
   final Color? inputCursorColor;
   final ScrollController? scrollController;
-  final bool showTraillingBeforeSend;
+  final bool showTrailingBeforeSend;
   final FocusNode? focusNode;
   final EdgeInsets inputToolbarPadding;
   final EdgeInsets inputToolbarMargin;
@@ -32,7 +32,7 @@ class ChatInputToolbar extends StatelessWidget {
   final bool reverse;
   final TextInputAction? textInputAction;
 
-  ChatInputToolbar({
+  const ChatInputToolbar({
     Key? key,
     this.textDirection = TextDirection.ltr,
     this.focusNode,
@@ -44,7 +44,7 @@ class ChatInputToolbar extends StatelessWidget {
     this.inputDisabled = false,
     this.controller,
     this.leading = const [],
-    this.trailling = const [],
+    this.trailing = const [],
     this.inputDecoration,
     this.textCapitalization,
     this.inputTextStyle,
@@ -61,7 +61,7 @@ class ChatInputToolbar extends StatelessWidget {
     this.messageIdGenerator,
     this.inputFooterBuilder,
     this.sendButtonBuilder,
-    this.showTraillingBeforeSend = true,
+    this.showTrailingBeforeSend = true,
     this.inputToolbarPadding = const EdgeInsets.all(0.0),
     this.inputToolbarMargin = const EdgeInsets.all(0.0),
   }) : super(key: key);
@@ -78,9 +78,7 @@ class ChatInputToolbar extends StatelessWidget {
     return Container(
       padding: inputToolbarPadding,
       margin: inputToolbarMargin,
-      decoration: inputContainerStyle != null
-          ? inputContainerStyle
-          : BoxDecoration(color: Colors.white),
+      decoration: inputContainerStyle ?? const BoxDecoration(color: Colors.white),
       child: Column(
         children: <Widget>[
           Row(
@@ -111,12 +109,10 @@ class ChatInputToolbar extends StatelessWidget {
                         bool? isFocused,
                       }) =>
                           null,
-                      decoration: inputDecoration != null
-                          ? inputDecoration
-                          : InputDecoration.collapsed(
-                              hintText: "",
-                              fillColor: Colors.white,
-                            ),
+                      decoration: inputDecoration ?? const InputDecoration.collapsed(
+                        hintText: '',
+                        fillColor: Colors.white,
+                      ),
                       textCapitalization: textCapitalization!,
                       controller: controller,
                       style: inputTextStyle,
@@ -131,25 +127,23 @@ class ChatInputToolbar extends StatelessWidget {
                   ),
                 ),
               ),
-              if (showTraillingBeforeSend) ...trailling,
+              if (showTrailingBeforeSend) ...trailing,
               if (sendButtonBuilder != null)
                 sendButtonBuilder!(() async {
-                  if (text!.length != 0) {
+                  if (text!.isNotEmpty) {
                     await onSend!(message);
-
-                    controller!.text = "";
-
-                    onTextChange!("");
+                    controller!.text = '';
+                    onTextChange!('');
                   }
                 })
               else
                 IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: alwaysShowSend || text!.length != 0
+                  icon: const Icon(Icons.send),
+                  onPressed: alwaysShowSend || text!.isNotEmpty
                       ? () => _sendMessage(context, message)
                       : null,
                 ),
-              if (!showTraillingBeforeSend) ...trailling,
+              if (!showTrailingBeforeSend) ...trailing,
             ],
           ),
           if (inputFooterBuilder != null) inputFooterBuilder!()
@@ -159,16 +153,16 @@ class ChatInputToolbar extends StatelessWidget {
   }
 
   void _sendMessage(BuildContext context, ChatMessage message) async {
-    if (text!.length != 0) {
+    if (text!.isNotEmpty) {
       await onSend!(message);
 
-      controller!.text = "";
+      controller!.text = '';
 
-      onTextChange!("");
+      onTextChange!('');
 
       FocusScope.of(context).requestFocus(focusNode);
 
-      Timer(Duration(milliseconds: 150), () {
+      Timer(const Duration(milliseconds: 150), () {
         scrollController!.animateTo(
           reverse ? 0.0 : scrollController!.position.maxScrollExtent + 30.0,
           curve: Curves.easeOut,

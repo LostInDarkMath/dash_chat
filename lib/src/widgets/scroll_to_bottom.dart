@@ -6,23 +6,24 @@ class ScrollToBottom extends StatelessWidget {
   final bool inverted;
   final ScrollToBottomStyle scrollToBottomStyle;
 
-  ScrollToBottom({
+  const ScrollToBottom({
     this.onScrollToBottomPress,
     required this.scrollController,
     required this.inverted,
     required this.scrollToBottomStyle,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: scrollToBottomStyle.width,
       height: scrollToBottomStyle.height,
       child: RawMaterialButton(
         elevation: 5,
         fillColor: scrollToBottomStyle.backgroundColor ??
             Theme.of(context).primaryColor,
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         child: Icon(
           scrollToBottomStyle.icon ?? Icons.keyboard_arrow_down,
           color: scrollToBottomStyle.textColor ?? Colors.white,

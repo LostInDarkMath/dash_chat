@@ -31,13 +31,13 @@ class MessageContainer extends StatelessWidget {
   /// takes [BoxDecoration]
   final BoxDecoration? messageContainerDecoration;
 
-  /// Used to parse text to make it linkified text uses
+  /// Used to parse text to make it linked text uses
   /// [flutter_parsed_text](https://pub.dev/packages/flutter_parsed_text)
   /// takes a list of [MatchText] in order to parse Email, phone, links
-  /// and can also add custom pattersn using regex
+  /// and can also add custom pattern using regex
   final List<MatchText> parsePatterns;
 
-  /// A flag which is used for assiging styles
+  /// A flag which is used for assigning styles
   final bool isUser;
 
   /// Provides a list of buttons to allow the usage of adding buttons to
@@ -61,7 +61,7 @@ class MessageContainer extends StatelessWidget {
   /// Default to `true`
   final bool textBeforeImage;
 
-  /// overrides the boxdecoration of the message
+  /// overrides the [BoxDecoration] of the message
   /// can be used to override color, or customise the message container
   /// params [ChatMessage] and [isUser]: boolean
   /// return BoxDecoration
@@ -82,7 +82,8 @@ class MessageContainer extends StatelessWidget {
     this.buttons,
     this.messagePadding = const EdgeInsets.all(8.0),
     this.messageDecorationBuilder,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -97,18 +98,16 @@ class MessageContainer extends StatelessWidget {
       child: Container(
         decoration: messageDecorationBuilder?.call(message, isUser) ??
             messageContainerDecoration?.copyWith(
-              color: message.user.containerColor != null
-                  ? message.user.containerColor
-                  : messageContainerDecoration!.color,
+              color: message.user.containerColor ?? messageContainerDecoration!.color,
             ) ??
             BoxDecoration(
               color: message.user.containerColor ??
                   (isUser
-                      ? Theme.of(context).accentColor
-                      : Color.fromRGBO(225, 225, 225, 1)),
+                      ? Theme.of(context).colorScheme.secondary
+                      : const Color.fromRGBO(225, 225, 225, 1)),
               borderRadius: BorderRadius.circular(5.0),
             ),
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           bottom: 5.0,
         ),
         padding: messagePadding,
@@ -117,11 +116,11 @@ class MessageContainer extends StatelessWidget {
           crossAxisAlignment:
               isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: <Widget>[
-            if (this.textBeforeImage)
+            if (textBeforeImage)
               _buildMessageText()
             else
               _buildMessageImage(),
-            if (this.textBeforeImage)
+            if (textBeforeImage)
               _buildMessageImage()
             else
               _buildMessageText(),
@@ -147,7 +146,7 @@ class MessageContainer extends StatelessWidget {
                   message,
                 ) ??
                 Padding(
-                  padding: EdgeInsets.only(top: 5.0),
+                  padding: const EdgeInsets.only(top: 5.0),
                   child: Text(
                     timeFormat != null
                         ? timeFormat!.format(message.createdAt)
@@ -181,7 +180,7 @@ class MessageContainer extends StatelessWidget {
     if (message.image != null) {
       return messageImageBuilder?.call(message.image, message) ??
           Padding(
-            padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+            padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
             child: FadeInImage.memoryNetwork(
               height: constraints!.maxHeight * 0.3,
               width: constraints!.maxWidth * 0.7,
@@ -191,6 +190,6 @@ class MessageContainer extends StatelessWidget {
             ),
           );
     }
-    return SizedBox(width: 0, height: 0);
+    return const SizedBox(width: 0, height: 0);
   }
 }

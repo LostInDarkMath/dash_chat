@@ -1,29 +1,29 @@
 part of dash_chat;
 
 /// Avatar container for the the chat view uses a [CircleAvatar]
-/// widget as default which can be overriden by providing
+/// widget as default which can be overridden by providing
 /// [avatarBuilder] property
 class AvatarContainer extends StatelessWidget {
   /// A [ChatUser] object use to get the url of the user
   /// avatar
   final ChatUser user;
 
-  /// [onPress] function takea a function with this structure
+  /// [onPress] function take a function with this structure
   /// [Function(ChatUser)] will trigger when the avatar
   /// is tapped on
   final Function(ChatUser)? onPress;
 
-  /// [onLongPress] function takea a function with this structure
+  /// [onLongPress] function take a function with this structure
   /// [Function(ChatUser)] will trigger when the avatar
   /// is long pressed
   final Function(ChatUser)? onLongPress;
 
-  /// [avatarBuilder] function takea a function with this structure
+  /// [avatarBuilder] function take a function with this structure
   /// [Widget Function(ChatUser)] to build the avatar
   final Widget Function(ChatUser)? avatarBuilder;
 
   /// [constraints] to apply to build the layout
-  /// by default used MediaQuery and take screen size as constaints
+  /// by default used MediaQuery and take screen size as constants
   final BoxConstraints? constraints;
 
   final double? avatarMaxSize;
@@ -35,7 +35,8 @@ class AvatarContainer extends StatelessWidget {
     this.avatarBuilder,
     this.constraints,
     this.avatarMaxSize,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,7 @@ class AvatarContainer extends StatelessWidget {
                             : user.name![0])),
                   ),
                 ),
-                user.avatar != null && user.avatar!.length != 0
+                user.avatar != null && user.avatar!.isNotEmpty
                     ? Center(
                         child: ClipOval(
                           child: FadeInImage.memoryNetwork(

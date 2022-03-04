@@ -1,16 +1,3 @@
-<p align="center">
-  <h1 align="center" style="font-size: 48px;">⚠️ V1 is not maintained anymore, check the V2 on: https://github.com/molteo-engineering-team/Dash-Chat-2 ⚠️</h1>
-</p> 
-<hr>
-<p align="center">
-  <img src="https://media.giphy.com/media/ghBkB5BHQgdhamZ2WA/giphy.gif" />
-  <h1 align="center" style="font-size: 48px;">💬 Dash Chat</h1>
-  <h5 align="center">The most complete Chat UI for flutter</h5>
-  <p align="center">Inspired by <a href="https://github.com/FaridSafi/react-native-gifted-chat">react-native-gifted-chat.</a>
-      Highly customizable and helps developing chat UI faster.
-  </p>
-</p>
-
 ## Usage 💻
 
 To use this package, add `dash_chat` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).

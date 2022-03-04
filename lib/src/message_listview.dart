@@ -3,7 +3,7 @@ part of dash_chat;
 class MessageListView extends StatefulWidget {
   final List<ChatMessage> messages;
   final ChatUser user;
-  final bool? showuserAvatar;
+  final bool? showUserAvatar;
   final DateFormat? dateFormat;
   final DateFormat? timeFormat;
   final bool? showAvatarForEverMessage;
@@ -37,7 +37,7 @@ class MessageListView extends StatefulWidget {
   final double? avatarMaxSize;
   final BoxDecoration Function(ChatMessage, bool?)? messageDecorationBuilder;
 
-  MessageListView({
+  const MessageListView({
     this.showLoadEarlierWidget,
     this.avatarMaxSize,
     this.shouldShowLoadEarlier,
@@ -51,7 +51,7 @@ class MessageListView extends StatefulWidget {
     this.messageContainerDecoration,
     required this.messages,
     required this.user,
-    this.showuserAvatar,
+    this.showUserAvatar,
     this.dateFormat,
     this.timeFormat,
     this.showAvatarForEverMessage,
@@ -74,14 +74,15 @@ class MessageListView extends StatefulWidget {
     this.messagePadding = const EdgeInsets.all(8.0),
     this.textBeforeImage = true,
     this.messageDecorationBuilder,
-  });
+    Key? key,
+  }) :super(key: key);
 
   @override
   _MessageListViewState createState() => _MessageListViewState();
 }
 
 class _MessageListViewState extends State<MessageListView> {
-  double previousPixelPostion = 0.0;
+  double previousPixelPosition = 0.0;
 
   bool scrollNotificationFunc(ScrollNotification scrollNotification) {
     double bottom =
@@ -143,7 +144,7 @@ class _MessageListViewState extends State<MessageListView> {
                     bool last = false;
                     bool showDate;
 
-                    if (widget.messages.length == 0) {
+                    if (widget.messages.isEmpty) {
                       first = true;
                     } else if (widget.messages.length - 1 == i) {
                       last = true;
@@ -226,32 +227,28 @@ class _MessageListViewState extends State<MessageListView> {
                                         widget.onLongPressMessage!(
                                             widget.messages[i]);
                                       } else {
-                                        showBottomSheet(
+                                        showBottomSheet<void>(
                                             context: context,
-                                            builder: (context) => Container(
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.min,
-                                                    children: <Widget>[
-                                                      ListTile(
-                                                        leading: Icon(
-                                                            Icons.content_copy),
-                                                        title: Text(
-                                                            "Copy to clipboard"),
-                                                        onTap: () {
-                                                          Clipboard.setData(
-                                                              ClipboardData(
-                                                                  text: widget
-                                                                      .messages[
-                                                                          i]
-                                                                      .text));
-                                                          Navigator.pop(
-                                                              context);
-                                                        },
-                                                      )
-                                                    ],
-                                                  ),
-                                                ));
+                                            builder: (context) => Column(
+                                              mainAxisSize:
+                                                  MainAxisSize.min,
+                                              children: <Widget>[
+                                                ListTile(
+                                                  leading: const Icon(Icons.content_copy),
+                                                  title: const Text('Copy to clipboard'),
+                                                  onTap: () {
+                                                    Clipboard.setData(
+                                                        ClipboardData(
+                                                            text: widget
+                                                                .messages[
+                                                                    i]
+                                                                .text));
+                                                    Navigator.pop(
+                                                        context);
+                                                  },
+                                                )
+                                              ],
+                                            ));
                                       }
                                     },
                                     child: widget.messageBuilder != null
@@ -295,7 +292,7 @@ class _MessageListViewState extends State<MessageListView> {
                                           ),
                                   ),
                                 ),
-                                if (widget.showuserAvatar!)
+                                if (widget.showUserAvatar!)
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                       horizontal: constraints.maxWidth * 0.02,
@@ -318,7 +315,7 @@ class _MessageListViewState extends State<MessageListView> {
                                     ),
                                   )
                                 else
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 10.0,
                                   ),
                               ],
@@ -344,7 +341,7 @@ class _MessageListViewState extends State<MessageListView> {
                 ),
                 AnimatedPositioned(
                   top: widget.showLoadMore! ? 8.0 : -50.0,
-                  duration: Duration(milliseconds: 200),
+                  duration: const Duration(milliseconds: 200),
                   child: widget.showLoadEarlierWidget != null
                       ? widget.showLoadEarlierWidget!()
                       : LoadEarlierWidget(

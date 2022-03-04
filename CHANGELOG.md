@@ -1,3 +1,7 @@
+## [1.2.0]
+- I forked the library ;)
+- Update dependencies, added lints and huge cleanup.
+
 ## [1.1.16]
 - Pubspec updated to work with new UUID package [#172] https://github.com/fayeed/dash_chat/pull/172 by [@GonzaloAldana](https://github.com/GonzaloAldana)
 

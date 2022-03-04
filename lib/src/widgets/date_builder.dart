@@ -1,11 +1,12 @@
 part of dash_chat;
 
 class DateBuilder extends StatelessWidget {
-  DateBuilder({
+  const DateBuilder({
     required this.date,
     this.customDateBuilder,
     this.dateFormat,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final DateTime date;
   final Widget Function(String)? customDateBuilder;
@@ -20,18 +21,18 @@ class DateBuilder extends StatelessWidget {
             color: Colors.grey,
             borderRadius: BorderRadius.circular(10.0),
           ),
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             bottom: 5.0,
             top: 5.0,
             left: 10.0,
             right: 10.0,
           ),
-          margin: EdgeInsets.symmetric(vertical: 10.0),
+          margin: const EdgeInsets.symmetric(vertical: 10.0),
           child: Text(
             dateFormat != null
                 ? dateFormat!.format(date)
                 : DateFormat('yyyy-MMM-dd').format(date),
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 12.0,
             ),
