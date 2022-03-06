@@ -149,7 +149,7 @@ class MessageContainer extends StatelessWidget {
     return messageTextBuilder?.call(message.text, message) ??
         ParsedText(
           parse: parsePatterns,
-          text: message.text!,
+          text: message.text,
           style: TextStyle(
             color: message.user.color ?? (isUser ? Colors.white70 : Colors.black87),
           ),

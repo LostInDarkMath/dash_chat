@@ -11,7 +11,7 @@ class ChatMessage {
   String? id;
 
   /// Actual text message.
-  String? text;
+  String text;
 
   /// It's a [non-optional] parameter which specifies the time the
   /// message was delivered takes a [DateTime] object.
@@ -56,16 +56,16 @@ class ChatMessage {
     this.id = id ?? messageIdGenerator?.call() ?? const Uuid().v4().toString();
   }
 
-  ChatMessage.fromJson(Map<dynamic, dynamic> json) {
-    id = json['id'] as String?;
-    text = json['text'] as String?;
-    image = json['image'] as String?;
-    video = json['video'] as String?;
-    createdAt = DateTime.fromMillisecondsSinceEpoch(json['createdAt'] as int);
-    user = ChatUser.fromJson(json['user'] as Map<String, dynamic>);
-    quickReplies = json['quickReplies'] != null ? QuickReplies.fromJson(json['quickReplies'] as Map<String, dynamic>) : null;
-    customProperties = json['customProperties'] as Map<String, dynamic>?;
-  }
+  ChatMessage.fromJson(Map<dynamic, dynamic> json):
+    id = json['id'] as String?,
+    text = json['text'] as String,
+    image = json['image'] as String?,
+    video = json['video'] as String?,
+    createdAt = DateTime.fromMillisecondsSinceEpoch(json['createdAt'] as int),
+    user = ChatUser.fromJson(json['user'] as Map<String, dynamic>),
+    quickReplies = json['quickReplies'] != null ? QuickReplies.fromJson(json['quickReplies'] as Map<String, dynamic>) : null,
+    customProperties = json['customProperties'] as Map<String, dynamic>?
+  ;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
     'id': id,

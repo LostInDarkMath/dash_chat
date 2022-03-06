@@ -13,7 +13,7 @@ class ChatInputToolbar extends StatelessWidget {
   final bool alwaysShowSend;
   final ChatUser user;
   final Future<bool> Function(ChatMessage)? onSend;
-  final String? text;
+  final String text;
   final Function(String)? onTextChange;
   final bool inputDisabled;
   final String Function()? messageIdGenerator;
@@ -37,7 +37,7 @@ class ChatInputToolbar extends StatelessWidget {
     this.textDirection = TextDirection.ltr,
     this.focusNode,
     this.scrollController,
-    this.text,
+    required this.text,
     this.textInputAction,
     this.sendOnEnter = false,
     this.onTextChange,
@@ -131,7 +131,7 @@ class ChatInputToolbar extends StatelessWidget {
               if (showTrailingBeforeSend) ...trailing,
               if (sendButtonBuilder != null)
                 sendButtonBuilder!(() async {
-                  if (text!.isNotEmpty) {
+                  if (text.isNotEmpty) {
                     final wasSent = await onSend!(message);
 
                     if(!wasSent){
@@ -145,7 +145,7 @@ class ChatInputToolbar extends StatelessWidget {
               else
                 IconButton(
                   icon: const Icon(Icons.send),
-                  onPressed: alwaysShowSend || text!.isNotEmpty ? () => _sendMessage(context, message) : null,
+                  onPressed: alwaysShowSend || text.isNotEmpty ? () => _sendMessage(context, message) : null,
                 ),
               if (!showTrailingBeforeSend) ...trailing,
             ],
@@ -157,7 +157,7 @@ class ChatInputToolbar extends StatelessWidget {
   }
 
   void _sendMessage(BuildContext context, ChatMessage message) async {
-    if (text!.isNotEmpty) {
+    if (text.isNotEmpty) {
       final wasSent = await onSend!(message);
 
       if(!wasSent){
