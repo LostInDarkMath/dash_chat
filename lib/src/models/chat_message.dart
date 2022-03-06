@@ -8,7 +8,7 @@ class ChatMessage {
   /// an optional parameter called [messageIdGenerator].
   /// [messageIdGenerator] take a function with
   /// signature [String Function()]
-  String? id;
+  String id;
 
   /// Actual text message.
   String text;
@@ -35,36 +35,37 @@ class ChatMessage {
 
   /// Allows to set custom-properties that could help with implementing custom
   /// functionality to dash chat.
-  Map<String, dynamic>? customProperties;
+  Map<String, dynamic> customProperties;
 
   /// Allows to set buttons that could help with implementing custom
   /// actions in message container.
   List<Widget>? buttons;
 
-  ChatMessage(
-      {String? id,
-      required this.text,
-      required this.user,
-      this.image,
-      this.video,
-      this.quickReplies,
-      String Function()? messageIdGenerator,
-      DateTime? createdAt,
-      this.customProperties,
-      this.buttons}) {
-    this.createdAt = createdAt ?? DateTime.now();
-    this.id = id ?? messageIdGenerator?.call() ?? const Uuid().v4().toString();
-  }
+  ChatMessage({
+    String? id,
+    required this.text,
+    required this.user,
+    this.image,
+    this.video,
+    this.quickReplies,
+    String Function()? messageIdGenerator,
+    DateTime? createdAt,
+    this.customProperties = const <String, dynamic>{},
+    this.buttons,
+  }):
+    createdAt = createdAt ?? DateTime.now(),
+    id = id ?? messageIdGenerator?.call() ?? const Uuid().v4().toString()
+  ;
 
   ChatMessage.fromJson(Map<dynamic, dynamic> json):
-    id = json['id'] as String?,
+    id = json['id'] as String,
     text = json['text'] as String,
     image = json['image'] as String?,
     video = json['video'] as String?,
     createdAt = DateTime.fromMillisecondsSinceEpoch(json['createdAt'] as int),
     user = ChatUser.fromJson(json['user'] as Map<String, dynamic>),
     quickReplies = json['quickReplies'] != null ? QuickReplies.fromJson(json['quickReplies'] as Map<String, dynamic>) : null,
-    customProperties = json['customProperties'] as Map<String, dynamic>?
+    customProperties = json['customProperties'] as Map<String, dynamic>? ?? <String, dynamic>{}
   ;
 
   Map<String, dynamic> toJson() => <String, dynamic>{

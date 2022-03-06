@@ -59,7 +59,7 @@ class AvatarContainer extends StatelessWidget {
                       maxHeight: avatarMaxSize!,
                     ),
                     color: Colors.grey,
-                    child: Center(child: Text(user.name == null || user.name!.isEmpty ? '' : user.name![0])),
+                    child: Center(child: Text(user.name.isEmpty ? '' : user.name[0])),
                   ),
                 ),
                 user.avatar != null && user.avatar!.isNotEmpty

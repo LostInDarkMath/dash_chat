@@ -5,10 +5,10 @@ part of dash_chat;
 class ChatUser {
   /// Unique id of the user if no unique is provided a [UUID v4]
   /// is automatically assigned to the chat user.
-  String? uid;
+  String uid;
 
   /// An [optional] parameter to set the user name.
-  String? name;
+  String name;
 
   /// An [optional] parameter to set the user first name, if set will override the name property.
   String? firstName;
@@ -27,32 +27,31 @@ class ChatUser {
 
   /// Allows to set custom-properties that could help with implementing custom
   /// functionality to dash chat.
-  Map<String, dynamic>? customProperties;
+  Map<String, dynamic> customProperties;
 
   ChatUser({
     String? uid,
-    String? name,
+    required this.name,
     this.avatar,
     this.containerColor,
     this.color,
-    this.customProperties,
+    this.customProperties = const <String, dynamic>{},
     this.firstName,
     this.lastName,
-  }) {
-    this.name = name ?? '$firstName $lastName';
-    this.uid = uid ?? const Uuid().v4().toString();
-  }
+  }):
+    uid = uid ?? const Uuid().v4().toString()
+  ;
 
-  ChatUser.fromJson(Map<dynamic, dynamic> json) {
-    uid = json['uid'] as String?;
-    name = (json['name'] as String?) ?? '$firstName $lastName';
-    firstName = json['firstName'] as String?;
-    lastName = json['lastName'] as String?;
-    avatar = json['avatar'] as String?;
-    containerColor = json['containerColor'] != null ? Color(json['containerColor'] as int) : null;
-    color = json['color'] != null ? Color(json['color'] as int) : null;
-    customProperties = json['customProperties'] as Map<String, dynamic>?;
-  }
+  ChatUser.fromJson(Map<dynamic, dynamic> json):
+    uid = json['uid'] as String,
+    name = json['name'] as String,
+    firstName = json['firstName'] as String?,
+    lastName = json['lastName'] as String?,
+    avatar = json['avatar'] as String?,
+    containerColor = json['containerColor'] != null ? Color(json['containerColor'] as int) : null,
+    color = json['color'] != null ? Color(json['color'] as int) : null,
+    customProperties = json['customProperties'] as Map<String, dynamic>? ?? <String, dynamic>{}
+  ;
 
   Map<String, dynamic> toJson() => <String, dynamic>{
     'uid': uid,

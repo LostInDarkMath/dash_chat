@@ -15,7 +15,7 @@ class MessageContainer extends StatelessWidget {
   /// [messageTextBuilder] function takes a function with this
   /// structure [Widget Function(String)] to render the text inside
   /// the container.
-  final Widget Function(String?, [ChatMessage])? messageTextBuilder;
+  final Widget Function(String, [ChatMessage])? messageTextBuilder;
 
   /// [messageImageBuilder] function takes a function with this
   /// structure [Widget Function(String)] to render the image inside

@@ -10,13 +10,4 @@ void main() {
 
     expect(chatUser.name, 'my-name');
   });
-
-  test('can instantiate a ChatUser passing a first and last name', () {
-    ChatUser chatUser = ChatUser(
-      firstName: 'first',
-      lastName: 'last',
-    );
-
-    expect(chatUser.name, 'first last');
-  });
 }
