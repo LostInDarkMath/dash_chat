@@ -39,7 +39,7 @@ class DashChat extends StatefulWidget {
   /// If provided will stop using the default controller
   /// i.e [TextEditingController] and will use this to update the
   /// text input field.
-  final String? text;
+  final String initialText;
 
   /// A callback which allows input validation or manipulation.
   /// If the text parameter is passed then onTextChange must also be passed.
@@ -319,7 +319,7 @@ class DashChat extends StatefulWidget {
     this.readOnly = false,
     required this.messages,
     this.onTextChange,
-    this.text,
+    this.initialText = '',
     this.inputDisabled = false,
     this.textController,
     this.focusNode,
@@ -400,11 +400,12 @@ class DashChatState extends State<DashChat> {
 
   @override
   void initState() {
+    super.initState();
     scrollController = widget.scrollController ?? ScrollController();
     textController = widget.textController ?? TextEditingController();
     inputFocusNode = widget.focusNode ?? FocusNode();
     WidgetsBinding.instance!.addPostFrameCallback(widgetBuilt);
-    super.initState();
+    _text = widget.initialText;
   }
 
   @override
@@ -539,7 +540,7 @@ class DashChatState extends State<DashChat> {
                         messageIdGenerator: widget.messageIdGenerator,
                         maxInputLength: widget.maxInputLength,
                         sendButtonBuilder: widget.sendButtonBuilder,
-                        text: widget.text ?? _text,
+                        text: _text,
                         onTextChange: onTextChange,
                         inputDisabled: widget.inputDisabled,
                         leading: widget.leading,
