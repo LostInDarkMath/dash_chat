@@ -126,13 +126,13 @@ class DashChat extends StatefulWidget {
   final Widget Function(ChatMessage)? messageBuilder;
 
   /// messageTextBuilder will override the the default message text.
-  final Widget Function(String?, [ChatMessage])? messageTextBuilder;
+  final Widget Function(String?, ChatMessage)? messageTextBuilder;
 
   /// messageImageBuilder will override the the default Image.
-  final Widget Function(String? url, [ChatMessage])? messageImageBuilder;
+  final Widget Function(String? url, ChatMessage)? messageImageBuilder;
 
   /// messageTimeBuilder will override the the default text.
-  final Widget Function(String formattedTime, [ChatMessage])?
+  final Widget Function(String formattedTime, ChatMessage)?
       messageTimeBuilder;
 
   /// dateBuilder will override the the default time text.
