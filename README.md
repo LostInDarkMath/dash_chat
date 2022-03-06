@@ -1,4 +1,4 @@
-# This is a fork a the famous [DashChat library](https://github.com/fayeed/dash_chat)
+# This is a fork of the famous [DashChat library](https://github.com/fayeed/dash_chat)
 It is no longer maintained and the other forks do not seem to be as reliable as the original library.
 Therefore I created my own fork to add the feature that I want.
 Thanks to [Fayeed](https://github.com/fayeed) who created the v1 of this package: https://github.com/fayeed/dash_chat and made that possible!

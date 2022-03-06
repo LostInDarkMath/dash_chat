@@ -41,9 +41,9 @@ class DashChat extends StatefulWidget {
   /// text input field.
   final String? text;
 
-  /// If the text parameter is passed then onTextChange must also
-  /// be passed.
-  final Function(String)? onTextChange;
+  /// A callback which allows input validation or manipulation.
+  /// If the text parameter is passed then onTextChange must also be passed.
+  final String Function(String)? onTextChange;
 
   /// If the input TextField is disabled.
   final bool inputDisabled;
@@ -132,8 +132,7 @@ class DashChat extends StatefulWidget {
   final Widget Function(String? url, ChatMessage)? messageImageBuilder;
 
   /// messageTimeBuilder will override the the default text.
-  final Widget Function(String formattedTime, ChatMessage)?
-      messageTimeBuilder;
+  final Widget Function(String formattedTime, ChatMessage)? messageTimeBuilder;
 
   /// dateBuilder will override the the default time text.
   final Widget Function(String)? dateBuilder;
@@ -357,10 +356,6 @@ class DashChat extends StatefulWidget {
     this.messageDecorationBuilder,
   }) : super(key: key);
 
-  String? getVal() {
-    return text;
-  }
-
   @override
   DashChatState createState() => DashChatState();
 }
@@ -374,7 +369,6 @@ class DashChatState extends State<DashChat> {
   GlobalKey inputKey = GlobalKey();
   double height = 48.0;
   bool showLoadMore = false;
-  String get messageInput => _text;
   bool _initialLoad = true;
   Timer? _timer;
 
@@ -382,6 +376,9 @@ class DashChatState extends State<DashChat> {
     if (visible) {
       changeVisible(false);
     }
+
+    _text = widget.onTextChange?.call(_text) ?? _text;
+
     setState(() {
       _text = text;
     });
@@ -417,9 +414,7 @@ class DashChatState extends State<DashChat> {
   }
 
   void widgetBuilt(Duration d) {
-    double initPos = widget.inverted
-        ? 0.0
-        : scrollController.position.maxScrollExtent + 25.0;
+    double initPos = widget.inverted ? 0.0 : scrollController.position.maxScrollExtent + 25.0;
 
     scrollController
         .animateTo(
@@ -439,12 +434,8 @@ class DashChatState extends State<DashChat> {
 
     scrollController.addListener(() {
       bool topReached = widget.inverted
-          ? scrollController.offset >=
-                  scrollController.position.maxScrollExtent &&
-              !scrollController.position.outOfRange
-          : scrollController.offset <=
-                  scrollController.position.minScrollExtent &&
-              !scrollController.position.outOfRange;
+          ? scrollController.offset >= scrollController.position.maxScrollExtent && !scrollController.position.outOfRange
+          : scrollController.offset <= scrollController.position.minScrollExtent && !scrollController.position.outOfRange;
 
       if (widget.shouldShowLoadEarlier) {
         if (topReached) {
@@ -466,21 +457,15 @@ class DashChatState extends State<DashChat> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final maxWidth = constraints.maxWidth == double.infinity
-            ? MediaQuery.of(context).size.width
-            : constraints.maxWidth;
-        final maxHeight = constraints.maxWidth == double.infinity
-            ? MediaQuery.of(context).size.height
-            : constraints.maxHeight;
+        final maxWidth = constraints.maxWidth == double.infinity ? MediaQuery.of(context).size.width : constraints.maxWidth;
+        final maxHeight = constraints.maxWidth == double.infinity ? MediaQuery.of(context).size.height : constraints.maxHeight;
         return SizedBox(
           height: widget.height ?? maxHeight,
           width: widget.width ?? maxWidth,
           child: Stack(
             children: <Widget>[
               Column(
-                mainAxisAlignment: widget.shouldStartMessagesFromTop
-                    ? MainAxisAlignment.start
-                    : MainAxisAlignment.end,
+                mainAxisAlignment: widget.shouldStartMessagesFromTop ? MainAxisAlignment.start : MainAxisAlignment.end,
                 children: <Widget>[
                   MessageListView(
                       avatarMaxSize: widget.avatarMaxSize,
@@ -490,8 +475,7 @@ class DashChatState extends State<DashChat> {
                       showLoadEarlierWidget: widget.showLoadEarlierWidget,
                       onLoadEarlier: widget.onLoadEarlier,
                       defaultLoadCallback: changeDefaultLoadMore,
-                      messageContainerPadding:
-                          widget.messageContainerPadding as EdgeInsets,
+                      messageContainerPadding: widget.messageContainerPadding as EdgeInsets,
                       scrollController: widget.scrollController ?? scrollController,
                       user: widget.user,
                       messages: widget.messages,
@@ -499,8 +483,7 @@ class DashChatState extends State<DashChat> {
                       dateFormat: widget.dateFormat,
                       timeFormat: widget.timeFormat,
                       inverted: widget.inverted,
-                      showAvatarForEverMessage:
-                          widget.showAvatarForEveryMessage,
+                      showAvatarForEverMessage: widget.showAvatarForEveryMessage,
                       onLongPressAvatar: widget.onLongPressAvatar,
                       onPressAvatar: widget.onPressAvatar,
                       onLongPressMessage: widget.onLongPressMessage,
@@ -510,49 +493,33 @@ class DashChatState extends State<DashChat> {
                       messageImageBuilder: widget.messageImageBuilder,
                       messageTimeBuilder: widget.messageTimeBuilder,
                       dateBuilder: widget.dateBuilder,
-                      messageContainerDecoration:
-                          widget.messageContainerDecoration,
+                      messageContainerDecoration: widget.messageContainerDecoration,
                       parsePatterns: widget.parsePatterns,
                       changeVisible: changeVisible,
                       visible: visible,
                       showLoadMore: showLoadMore,
                       messageButtonsBuilder: widget.messageButtonsBuilder,
-                      messageDecorationBuilder:
-                          widget.messageDecorationBuilder),
-                  if (widget.messages.isNotEmpty &&
-                      widget.messages.last.user.uid != widget.user.uid &&
-                      widget.messages.last.quickReplies != null)
+                      messageDecorationBuilder: widget.messageDecorationBuilder),
+                  if (widget.messages.isNotEmpty && widget.messages.last.user.uid != widget.user.uid && widget.messages.last.quickReplies != null)
                     Container(
                       padding: widget.quickReplyPadding,
-                      constraints: BoxConstraints(
-                          maxHeight: widget.quickReplyScroll ? 50.0 : 100.0),
+                      constraints: BoxConstraints(maxHeight: widget.quickReplyScroll ? 50.0 : 100.0),
                       width: widget.quickReplyScroll ? null : maxWidth,
                       child: widget.quickReplyScroll
                           ? ListView(
                               scrollDirection: Axis.horizontal,
-                              children: widget
-                                  .messages.last.quickReplies!.values!
-                                  .map(_mapReply)
-                                  .toList(),
+                              children: widget.messages.last.quickReplies!.values!.map(_mapReply).toList(),
                             )
                           : Wrap(
                               children: <Widget>[
                                 ...widget.messages.last.quickReplies!.values!
-                                    .sublist(
-                                        0,
-                                        widget.messages.last.quickReplies!
-                                                    .values!.length <=
-                                                3
-                                            ? widget.messages.last.quickReplies!
-                                                .values!.length
-                                            : 3)
+                                    .sublist(0, widget.messages.last.quickReplies!.values!.length <= 3 ? widget.messages.last.quickReplies!.values!.length : 3)
                                     .map(_mapReply)
                                     .toList(),
                               ],
                             ),
                     ),
-                  if (widget.chatFooterBuilder != null)
-                    widget.chatFooterBuilder!(),
+                  if (widget.chatFooterBuilder != null) widget.chatFooterBuilder!(),
                   if (!widget.readOnly)
                     SafeArea(
                       child: ChatInputToolbar(
@@ -573,7 +540,7 @@ class DashChatState extends State<DashChat> {
                         maxInputLength: widget.maxInputLength,
                         sendButtonBuilder: widget.sendButtonBuilder,
                         text: widget.text ?? _text,
-                        onTextChange: widget.onTextChange ?? onTextChange,
+                        onTextChange: onTextChange,
                         inputDisabled: widget.inputDisabled,
                         leading: widget.leading,
                         trailing: widget.trailing,
@@ -614,10 +581,10 @@ class DashChatState extends State<DashChat> {
   }
 
   QuickReply _mapReply(Reply reply) => QuickReply(
-    reply: reply,
-    onReply: widget.onQuickReply,
-    quickReplyBuilder: widget.quickReplyBuilder,
-    quickReplyStyle: widget.quickReplyStyle,
-    quickReplyTextStyle: widget.quickReplyTextStyle,
-  );
+        reply: reply,
+        onReply: widget.onQuickReply,
+        quickReplyBuilder: widget.quickReplyBuilder,
+        quickReplyStyle: widget.quickReplyStyle,
+        quickReplyTextStyle: widget.quickReplyTextStyle,
+      );
 }
