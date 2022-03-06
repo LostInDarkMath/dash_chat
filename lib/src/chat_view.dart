@@ -63,13 +63,13 @@ class DashChat extends StatefulWidget {
   final String Function()? messageIdGenerator;
 
   /// The current user object [ChatUser].
+  /// This is the logged in user that opens the chat.
   final ChatUser user;
 
   /// An async callback which is called when the user clicks on send.
-  /// The callback takes a [ChatMessage] as argument and returns a boolean which indicates, If the sending was successful.
+  /// The callback takes a [ChatMessage] as argument and returns a boolean which indicates whether the sending was successful.
   /// If it returns true, the input field of the chat is cleared.
   /// Usually, you make an API call inside this callback which actually sends the [ChatMessage].
-  /// with the [ChatMessage] object before make calls.
   final Future<bool> Function(ChatMessage) onSend;
 
   /// Should the send button be always active it defaults to false

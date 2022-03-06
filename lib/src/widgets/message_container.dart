@@ -65,7 +65,7 @@ class MessageContainer extends StatelessWidget {
   /// can be used to override color, or customise the message container
   /// params [ChatMessage] and [isUser]: boolean
   /// return BoxDecoration
-  final BoxDecoration Function(ChatMessage, bool?)? messageDecorationBuilder;
+  final BoxDecoration Function(ChatMessage, bool)? messageDecorationBuilder;
 
   const MessageContainer({
     required this.message,
