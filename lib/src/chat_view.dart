@@ -377,11 +377,8 @@ class DashChatState extends State<DashChat> {
       changeVisible(false);
     }
 
-    _text = widget.onTextChange?.call(_text) ?? _text;
-
-    setState(() {
-      _text = text;
-    });
+    _text = widget.onTextChange?.call(text) ?? _text;
+    setState(() {});
   }
 
   void changeVisible(bool value) {
@@ -417,13 +414,11 @@ class DashChatState extends State<DashChat> {
   void widgetBuilt(Duration d) {
     double initPos = widget.inverted ? 0.0 : scrollController.position.maxScrollExtent + 25.0;
 
-    scrollController
-        .animateTo(
+    scrollController.animateTo(
       initPos,
       duration: const Duration(milliseconds: 150),
       curve: Curves.easeInOut,
-    )
-        .whenComplete(() {
+    ).whenComplete(() {
       _timer = Timer(const Duration(milliseconds: 1000), () {
         if (mounted) {
           setState(() {
