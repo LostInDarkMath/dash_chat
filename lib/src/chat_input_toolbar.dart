@@ -68,7 +68,6 @@ class ChatInputToolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    controller?.text = text; // apply initial value to text field
     ChatMessage message = ChatMessage(
       text: text,
       user: user,
