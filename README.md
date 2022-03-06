@@ -13,8 +13,7 @@ dependencies:
     url: https://github.com/LostInDarkMath/dash_chat.git
 ```
 
-## Features 🔮
-
+## Features that were already in the original package
 - Fully customizable components
 - Copy messages to clipboard
 - Multi-line TextInput
@@ -23,6 +22,9 @@ dependencies:
 - Quick Reply messages
 - Load earlier messages
 - Scroll to bottom Widget
+
+## Features that were NOT included in the original package
+- Added validation by making `onSend` returning a `Future<bool>` which indicates if the message input field should be cleared.
 
 ### Message object 📦
 

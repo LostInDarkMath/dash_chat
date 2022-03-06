@@ -12,7 +12,7 @@ class ChatInputToolbar extends StatelessWidget {
   final int? maxInputLength;
   final bool alwaysShowSend;
   final ChatUser user;
-  final Function(ChatMessage)? onSend;
+  final Future<bool> Function(ChatMessage)? onSend;
   final String? text;
   final Function(String)? onTextChange;
   final bool inputDisabled;
@@ -132,7 +132,12 @@ class ChatInputToolbar extends StatelessWidget {
               if (sendButtonBuilder != null)
                 sendButtonBuilder!(() async {
                   if (text!.isNotEmpty) {
-                    await onSend!(message);
+                    final wasSent = await onSend!(message);
+
+                    if(!wasSent){
+                      return;
+                    }
+
                     controller!.text = '';
                     onTextChange!('');
                   }
@@ -153,10 +158,13 @@ class ChatInputToolbar extends StatelessWidget {
 
   void _sendMessage(BuildContext context, ChatMessage message) async {
     if (text!.isNotEmpty) {
-      await onSend!(message);
+      final wasSent = await onSend!(message);
+
+      if(!wasSent){
+        return;
+      }
 
       controller!.text = '';
-
       onTextChange!('');
 
       FocusScope.of(context).requestFocus(focusNode);
