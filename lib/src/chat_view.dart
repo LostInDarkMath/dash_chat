@@ -243,6 +243,9 @@ class DashChat extends StatefulWidget {
   /// or used as a callback when the listView reaches the top
   final Function? onLoadEarlier;
 
+  /// A callback which is called when the user scrolls to the bottom.
+  final Function? onBottomReached;
+
   /// Padding for the default input toolbar
   /// by default it padding is set 0.0
   final EdgeInsets inputToolbarPadding;
@@ -288,6 +291,7 @@ class DashChat extends StatefulWidget {
     this.shouldShowLoadEarlier = false,
     this.showLoadEarlierWidget,
     this.onLoadEarlier,
+    this.onBottomReached,
     this.sendOnEnter = false,
     this.textInputAction,
     this.scrollToBottom = true,
@@ -433,6 +437,13 @@ class DashChatState extends State<DashChat> {
       bool topReached = widget.inverted
           ? scrollController.offset >= scrollController.position.maxScrollExtent && !scrollController.position.outOfRange
           : scrollController.offset <= scrollController.position.minScrollExtent && !scrollController.position.outOfRange;
+      bool bottomReached = widget.inverted
+          ? scrollController.offset <= scrollController.position.minScrollExtent && !scrollController.position.outOfRange
+          : scrollController.offset >= scrollController.position.maxScrollExtent && !scrollController.position.outOfRange;
+
+      if(bottomReached){
+        widget.onBottomReached?.call();
+      }
 
       if (widget.shouldShowLoadEarlier) {
         if (topReached) {

@@ -25,6 +25,7 @@ dependencies:
 
 ## Features that were NOT included in the original package
 - Added validation by making `onSend` returning a `Future<bool>` which indicates if the message input field should be cleared.
+- Added `onBottomReached` callback to get notified if the users scrolls to bottom.
 
 ## License ⚖️
 
