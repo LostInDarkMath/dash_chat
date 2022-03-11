@@ -25,6 +25,9 @@ class ChatUser {
   /// An [optional] parameter to set The Message bubble Color
   Color? containerColor;
 
+  /// An optional [DateTime] that indicates when the user was last online.
+  DateTime? lastOnline;
+
   /// Allows to set custom-properties that could help with implementing custom
   /// functionality to dash chat.
   Map<String, dynamic> customProperties;
@@ -38,6 +41,7 @@ class ChatUser {
     this.customProperties = const <String, dynamic>{},
     this.firstName,
     this.lastName,
+    this.lastOnline,
   }):
     uid = uid ?? const Uuid().v4().toString()
   ;
@@ -50,6 +54,7 @@ class ChatUser {
     avatar = json['avatar'] as String?,
     containerColor = json['containerColor'] != null ? Color(json['containerColor'] as int) : null,
     color = json['color'] != null ? Color(json['color'] as int) : null,
+    lastOnline = json['lastOnline'] != null ? DateTime.fromMillisecondsSinceEpoch(json['lastOnline'] as int) : null,
     customProperties = json['customProperties'] as Map<String, dynamic>? ?? <String, dynamic>{}
   ;
 
@@ -60,6 +65,7 @@ class ChatUser {
     'lastName': lastName,
     'avatar': avatar,
     'containerColor': containerColor != null ? containerColor!.value : null,
+    'lastOnline': lastOnline?.millisecondsSinceEpoch,
     'color': color != null ? color!.value : null,
     'customProperties': customProperties,
   };

@@ -1,5 +1,8 @@
 part of dash_chat;
 
+// ignore: non_constant_identifier_names
+final DATETIME_UNREAD = DateTime(1, 1, 1);
+
 /// A message data structure used by dash chat to handle messages
 /// and also to handle quick replies
 class ChatMessage {
@@ -37,6 +40,9 @@ class ChatMessage {
   /// functionality to dash chat.
   Map<String, dynamic> customProperties;
 
+  /// An optional [DateTime] indicating when the message was read.
+  DateTime? readAt;
+
   /// Allows to set buttons that could help with implementing custom
   /// actions in message container.
   List<Widget>? buttons;
@@ -52,6 +58,7 @@ class ChatMessage {
     DateTime? createdAt,
     this.customProperties = const <String, dynamic>{},
     this.buttons,
+    this.readAt,
   }):
     createdAt = createdAt ?? DateTime.now(),
     id = id ?? messageIdGenerator?.call() ?? const Uuid().v4().toString()
@@ -65,6 +72,7 @@ class ChatMessage {
     createdAt = DateTime.fromMillisecondsSinceEpoch(json['createdAt'] as int),
     user = ChatUser.fromJson(json['user'] as Map<String, dynamic>),
     quickReplies = json['quickReplies'] != null ? QuickReplies.fromJson(json['quickReplies'] as Map<String, dynamic>) : null,
+    readAt = json['readAt'] != null ? DateTime.fromMillisecondsSinceEpoch(json['readAt'] as int) : null,
     customProperties = json['customProperties'] as Map<String, dynamic>? ?? <String, dynamic>{}
   ;
 
@@ -74,6 +82,7 @@ class ChatMessage {
     'image': image,
     'video': video,
     'createdAt': createdAt.millisecondsSinceEpoch,
+    'readAt': readAt?.millisecondsSinceEpoch,
     'user': user.toJson(),
     'quickReplies': quickReplies?.toJson(),
     'customProperties': customProperties,
