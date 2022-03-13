@@ -12,7 +12,7 @@ class ChatInputToolbar extends StatelessWidget {
   final int? maxInputLength;
   final bool alwaysShowSend;
   final ChatUser user;
-  final Future<bool> Function(ChatMessage)? onSend;
+  final Future<bool> Function(ChatMessage) onSend;
   final Function(String) onTextChange;
   final bool inputDisabled;
   final String Function()? messageIdGenerator;
@@ -52,7 +52,7 @@ class ChatInputToolbar extends StatelessWidget {
     this.maxInputLength,
     this.inputCursorWidth = 2.0,
     this.inputCursorColor,
-    this.onSend,
+    required this.onSend,
     this.reverse = false,
     required this.user,
     this.alwaysShowSend = false,
@@ -130,7 +130,7 @@ class ChatInputToolbar extends StatelessWidget {
               if (sendButtonBuilder != null)
                 sendButtonBuilder!(() async {
                   if (controller.text.isNotEmpty) {
-                    final wasSent = await onSend!(message);
+                    final wasSent = await onSend(message);
 
                     if(!wasSent){
                       return;
@@ -155,7 +155,7 @@ class ChatInputToolbar extends StatelessWidget {
 
   void _sendMessage(BuildContext context, ChatMessage message) async {
     if (controller.text.isNotEmpty) {
-      final wasSent = await onSend!(message);
+      final wasSent = await onSend(message);
 
       if(!wasSent){
         return;

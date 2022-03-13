@@ -42,6 +42,8 @@ class DashChat extends StatefulWidget {
   final String initialText;
 
   /// A callback which allows input validation or manipulation.
+  /// Be careful with text manipulation, because you will lose your cursor position and have to
+  /// set it manually with the [TextEditingController].
   /// If the text parameter is passed then onTextChange must also be passed.
   final String Function(String)? onTextChange;
 
@@ -380,7 +382,12 @@ class DashChatState extends State<DashChat> {
       changeVisible(false);
     }
 
-    textController.text = widget.onTextChange?.call(text) ?? text;
+    final newText = widget.onTextChange?.call(text) ?? text;
+
+    if(newText != textController.text){
+      textController.text = newText; // note that the cursor position will be lost!
+    }
+
     setState(() {});
   }
 
