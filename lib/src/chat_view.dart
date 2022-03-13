@@ -365,7 +365,7 @@ class DashChat extends StatefulWidget {
 }
 
 class DashChatState extends State<DashChat> {
-  FocusNode? inputFocusNode;
+  late FocusNode inputFocusNode;
   late TextEditingController textController;
   late ScrollController scrollController;
   bool visible = false;

@@ -23,7 +23,7 @@ class ChatInputToolbar extends StatelessWidget {
   final Color? inputCursorColor;
   final ScrollController? scrollController;
   final bool showTrailingBeforeSend;
-  final FocusNode? focusNode;
+  final FocusNode focusNode;
   final EdgeInsets inputToolbarPadding;
   final EdgeInsets inputToolbarMargin;
   final TextDirection textDirection;
@@ -34,7 +34,7 @@ class ChatInputToolbar extends StatelessWidget {
   const ChatInputToolbar({
     Key? key,
     this.textDirection = TextDirection.ltr,
-    this.focusNode,
+    required this.focusNode,
     this.scrollController,
     this.textInputAction,
     this.sendOnEnter = false,
