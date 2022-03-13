@@ -368,7 +368,6 @@ class DashChatState extends State<DashChat> {
   FocusNode? inputFocusNode;
   late TextEditingController textController;
   late ScrollController scrollController;
-  String _text = '';
   bool visible = false;
   GlobalKey inputKey = GlobalKey();
   double height = 48.0;
@@ -381,7 +380,7 @@ class DashChatState extends State<DashChat> {
       changeVisible(false);
     }
 
-    _text = widget.onTextChange?.call(text) ?? _text;
+    textController.text = widget.onTextChange?.call(text) ?? text;
     setState(() {});
   }
 
@@ -406,7 +405,6 @@ class DashChatState extends State<DashChat> {
     textController = widget.textController ?? TextEditingController();
     inputFocusNode = widget.focusNode ?? FocusNode();
     WidgetsBinding.instance!.addPostFrameCallback(widgetBuilt);
-    _text = widget.initialText;
     textController.text = widget.initialText; // apply initial value to text field
   }
 
@@ -547,7 +545,6 @@ class DashChatState extends State<DashChat> {
                         messageIdGenerator: widget.messageIdGenerator,
                         maxInputLength: widget.maxInputLength,
                         sendButtonBuilder: widget.sendButtonBuilder,
-                        text: _text,
                         onTextChange: onTextChange,
                         inputDisabled: widget.inputDisabled,
                         leading: widget.leading,

@@ -1,7 +1,7 @@
 part of dash_chat;
 
 class ChatInputToolbar extends StatelessWidget {
-  final TextEditingController? controller;
+  final TextEditingController controller;
   final TextStyle? inputTextStyle;
   final InputDecoration? inputDecoration;
   final TextCapitalization? textCapitalization;
@@ -13,8 +13,7 @@ class ChatInputToolbar extends StatelessWidget {
   final bool alwaysShowSend;
   final ChatUser user;
   final Future<bool> Function(ChatMessage)? onSend;
-  final String text;
-  final Function(String)? onTextChange;
+  final Function(String) onTextChange;
   final bool inputDisabled;
   final String Function()? messageIdGenerator;
   final Widget Function(Function)? sendButtonBuilder;
@@ -37,12 +36,11 @@ class ChatInputToolbar extends StatelessWidget {
     this.textDirection = TextDirection.ltr,
     this.focusNode,
     this.scrollController,
-    required this.text,
     this.textInputAction,
     this.sendOnEnter = false,
-    this.onTextChange,
+    required this.onTextChange,
     this.inputDisabled = false,
-    this.controller,
+    required this.controller,
     this.leading = const [],
     this.trailing = const [],
     this.inputDecoration,
@@ -69,7 +67,7 @@ class ChatInputToolbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ChatMessage message = ChatMessage(
-      text: text,
+      text: controller.text,
       user: user,
       messageIdGenerator: messageIdGenerator,
       createdAt: DateTime.now(),
@@ -94,7 +92,7 @@ class ChatInputToolbar extends StatelessWidget {
                     child: TextField(
                       focusNode: focusNode,
                       onChanged: (value) {
-                        onTextChange!(value);
+                        onTextChange(value);
                       },
                       onSubmitted: (value) {
                         if (sendOnEnter) {
@@ -131,21 +129,20 @@ class ChatInputToolbar extends StatelessWidget {
               if (showTrailingBeforeSend) ...trailing,
               if (sendButtonBuilder != null)
                 sendButtonBuilder!(() async {
-                  if (text.isNotEmpty) {
+                  if (controller.text.isNotEmpty) {
                     final wasSent = await onSend!(message);
 
                     if(!wasSent){
                       return;
                     }
 
-                    controller!.text = '';
-                    onTextChange!('');
+                    onTextChange('');
                   }
                 })
               else
                 IconButton(
                   icon: const Icon(Icons.send),
-                  onPressed: alwaysShowSend || text.isNotEmpty ? () => _sendMessage(context, message) : null,
+                  onPressed: alwaysShowSend || controller.text.isNotEmpty ? () => _sendMessage(context, message) : null,
                 ),
               if (!showTrailingBeforeSend) ...trailing,
             ],
@@ -157,15 +154,14 @@ class ChatInputToolbar extends StatelessWidget {
   }
 
   void _sendMessage(BuildContext context, ChatMessage message) async {
-    if (text.isNotEmpty) {
+    if (controller.text.isNotEmpty) {
       final wasSent = await onSend!(message);
 
       if(!wasSent){
         return;
       }
 
-      controller!.text = '';
-      onTextChange!('');
+      onTextChange('');
 
       FocusScope.of(context).requestFocus(focusNode);
 
