@@ -66,13 +66,6 @@ class ChatInputToolbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ChatMessage message = ChatMessage(
-      text: controller.text,
-      user: user,
-      messageIdGenerator: messageIdGenerator,
-      createdAt: DateTime.now(),
-    );
-
     return Container(
       padding: inputToolbarPadding,
       margin: inputToolbarMargin,
@@ -96,7 +89,7 @@ class ChatInputToolbar extends StatelessWidget {
                       },
                       onSubmitted: (value) {
                         if (sendOnEnter) {
-                          _sendMessage(context, message);
+                          _sendMessage(context);
                         }
                       },
                       textInputAction: textInputAction,
@@ -128,21 +121,11 @@ class ChatInputToolbar extends StatelessWidget {
               ),
               if (showTrailingBeforeSend) ...trailing,
               if (sendButtonBuilder != null)
-                sendButtonBuilder!(() async {
-                  if (controller.text.isNotEmpty) {
-                    final wasSent = await onSend(message);
-
-                    if(!wasSent){
-                      return;
-                    }
-
-                    onTextChange('');
-                  }
-                })
+                sendButtonBuilder!(() async => await _sendMessage(context))
               else
                 IconButton(
                   icon: const Icon(Icons.send),
-                  onPressed: alwaysShowSend || controller.text.isNotEmpty ? () => _sendMessage(context, message) : null,
+                  onPressed: alwaysShowSend || controller.text.isNotEmpty ? () => _sendMessage(context) : null,
                 ),
               if (!showTrailingBeforeSend) ...trailing,
             ],
@@ -153,25 +136,34 @@ class ChatInputToolbar extends StatelessWidget {
     );
   }
 
-  void _sendMessage(BuildContext context, ChatMessage message) async {
-    if (controller.text.isNotEmpty) {
-      final wasSent = await onSend(message);
-
-      if(!wasSent){
-        return;
-      }
-
-      onTextChange('');
-
-      FocusScope.of(context).requestFocus(focusNode);
-
-      Timer(const Duration(milliseconds: 150), () {
-        scrollController!.animateTo(
-          reverse ? 0.0 : scrollController!.position.maxScrollExtent + 30.0,
-          curve: Curves.easeOut,
-          duration: const Duration(milliseconds: 300),
-        );
-      });
+  Future<void> _sendMessage(BuildContext context) async {
+    if (controller.text.isEmpty) {
+      return;
     }
+
+    final message = ChatMessage(
+      text: controller.text,
+      user: user,
+      messageIdGenerator: messageIdGenerator,
+      createdAt: DateTime.now(),
+    );
+
+    final wasSent = await onSend(message);
+
+    if(!wasSent){
+      return;
+    }
+
+    onTextChange('');
+
+    FocusScope.of(context).requestFocus(focusNode);
+
+    Timer(const Duration(milliseconds: 150), () {
+      scrollController!.animateTo(
+        reverse ? 0.0 : scrollController!.position.maxScrollExtent + 30.0,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+      );
+    });
   }
 }
