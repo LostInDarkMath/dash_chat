@@ -77,7 +77,7 @@ class MessageListView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _MessageListViewState createState() => _MessageListViewState();
+  State<MessageListView> createState() => _MessageListViewState();
 }
 
 class _MessageListViewState extends State<MessageListView> {

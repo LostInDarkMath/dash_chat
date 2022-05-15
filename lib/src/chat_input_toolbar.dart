@@ -148,6 +148,7 @@ class ChatInputToolbar extends StatelessWidget {
       createdAt: DateTime.now(),
     );
 
+    final focusScope = FocusScope.of(context);
     final wasSent = await onSend(message);
 
     if(!wasSent){
@@ -156,7 +157,7 @@ class ChatInputToolbar extends StatelessWidget {
 
     onTextChange('');
 
-    FocusScope.of(context).requestFocus(focusNode);
+    focusScope.requestFocus(focusNode);
 
     Timer(const Duration(milliseconds: 150), () {
       scrollController!.animateTo(

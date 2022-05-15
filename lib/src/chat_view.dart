@@ -411,7 +411,7 @@ class DashChatState extends State<DashChat> {
     scrollController = widget.scrollController ?? ScrollController();
     textController = widget.textController ?? TextEditingController();
     inputFocusNode = widget.focusNode ?? FocusNode();
-    WidgetsBinding.instance!.addPostFrameCallback(widgetBuilt);
+    WidgetsBinding.instance.addPostFrameCallback(widgetBuilt);
     textController.text = widget.initialText; // apply initial value to text field
   }
 

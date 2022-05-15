@@ -122,8 +122,8 @@ class MessageContainer extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: isUser ? MainAxisAlignment.end : MainAxisAlignment.start,
-                children: messageButtonsBuilder!(message),
                 mainAxisSize: MainAxisSize.min,
+                children: messageButtonsBuilder!(message),
               ),
             messageTimeBuilder?.call(
                   timeFormat?.format(message.createdAt) ?? DateFormat('HH:mm:ss').format(message.createdAt),
