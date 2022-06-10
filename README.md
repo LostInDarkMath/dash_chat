@@ -8,9 +8,9 @@ Thanks to [Fayeed](https://github.com/fayeed) who created the v1 of this package
 To use this package, add `dash_chat` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/).
 ```yaml
 dependencies:
-  new_version:
+  dash_chat:
     git:
-    url: https://github.com/LostInDarkMath/dash_chat.git
+      url: https://github.com/LostInDarkMath/dash_chat.git
 ```
 
 ## Features that were already in the original package
