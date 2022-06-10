@@ -105,7 +105,7 @@ class ChatInputToolbar extends StatelessWidget {
                             hintText: '',
                             fillColor: Colors.white,
                           ),
-                      textCapitalization: textCapitalization!,
+                      textCapitalization: textCapitalization ?? TextCapitalization.none,
                       controller: controller,
                       style: inputTextStyle,
                       maxLength: maxInputLength,
