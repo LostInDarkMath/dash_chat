@@ -178,7 +178,7 @@ class _MessageListViewState extends State<MessageListView> {
                         children: <Widget>[
                           if (showCurrentDate)
                             DateBuilder(
-                              date: currentDate!,
+                              date: currentDate,
                               customDateBuilder: widget.dateBuilder,
                               dateFormat: widget.dateFormat,
                             ),
@@ -223,18 +223,11 @@ class _MessageListViewState extends State<MessageListView> {
                                                       MainAxisSize.min,
                                                   children: <Widget>[
                                                     ListTile(
-                                                      leading: constIcon(
-                                                          Icons.content_copy),
-                                                      title: constText(
-                                                          'Copy to clipboard'),
+                                                      leading: const Icon(Icons.content_copy),
+                                                      title: const Text('Copy to clipboard'),
                                                       onTap: () {
-                                                        Clipboard.setData(
-                                                            ClipboardData(
-                                                                text: widget
-                                                                    .messages[i]
-                                                                    .text));
+                                                        Clipboard.setData(ClipboardData(text: widget.messages[i].text));
                                                         Navigator.pop(context);
-
                                                     },
                                                   )
                                                 ],
@@ -302,7 +295,7 @@ class _MessageListViewState extends State<MessageListView> {
                                   ),
                                 )
                               else
-                                constSizedBox(
+                                const SizedBox(
                                   width: 10.0,
                                 ),
                             ],
