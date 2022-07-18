@@ -11,69 +11,62 @@ class ChatUser {
   String name;
 
   /// An [optional] parameter to set the user first name, if set will override the name property.
-  String firstName;
+  String? firstName;
 
   /// An [optional] parameter to set the user last name, if set will override the name property.
-  String lastName;
+  String? lastName;
 
   /// An [optional] parameter to set the user avatar.
-  String avatar;
+  String? avatar;
 
   /// An [optional] parameter to set Text Color
-  Color color;
+  Color? color;
 
   /// An [optional] parameter to set The Message bubble Color
-  Color containerColor;
+  Color? containerColor;
+
+  /// An optional [DateTime] that indicates when the user was last online.
+  DateTime? lastOnline;
 
   /// Allows to set custom-properties that could help with implementing custom
-  /// functionality to dashchat.
+  /// functionality to dash chat.
   Map<String, dynamic> customProperties;
 
   ChatUser({
-    String uid,
-    String name,
+    String? uid,
+    required this.name,
     this.avatar,
     this.containerColor,
     this.color,
-    this.customProperties,
+    this.customProperties = const <String, dynamic>{},
     this.firstName,
     this.lastName,
-  }) {
-    this.name = name == null ? "$firstName $lastName" : name;
-    this.uid = uid != null ? uid : Uuid().v4().toString();
-  }
+    this.lastOnline,
+  }):
+    uid = uid ?? const Uuid().v4().toString()
+  ;
 
-  ChatUser.fromJson(Map<dynamic, dynamic> json) {
-    final pName = json["name"] as String;
+  ChatUser.fromJson(Map<dynamic, dynamic> json):
+    uid = json['uid'] as String,
+    name = json['name'] as String,
+    firstName = json['firstName'] as String?,
+    lastName = json['lastName'] as String?,
+    avatar = json['avatar'] as String?,
+    containerColor = json['containerColor'] != null ? Color(json['containerColor'] as int) : null,
+    color = json['color'] != null ? Color(json['color'] as int) : null,
+    lastOnline = json['lastOnline'] != null ? DateTime.fromMillisecondsSinceEpoch(json['lastOnline'] as int) : null,
+    customProperties = json['customProperties'] as Map<String, dynamic>? ?? <String, dynamic>{}
+  ;
 
-    uid = json['uid'];
-    name = pName == null ? "$firstName $lastName" : pName;
-    firstName = json['firstName'];
-    lastName = json['lastName'];
-    avatar = json['avatar'];
-    containerColor =
-        json['containerColor'] != null ? Color(json['containerColor']) : null;
-    color = json['color'] != null ? Color(json['color']) : null;
-    customProperties = json['customProperties'] as Map<String, dynamic>;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-
-    try {
-      data['uid'] = uid;
-      data['name'] = name;
-      data['firstName'] = firstName;
-      data['lastName'] = lastName;
-      data['avatar'] = avatar;
-      data['containerColor'] =
-          containerColor != null ? containerColor.value : null;
-      data['color'] = color != null ? color.value : null;
-      data['customProperties'] = this.customProperties;
-    } catch (e) {
-      print(e);
-    }
-
-    return data;
-  }
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    'uid': uid,
+    'name': name,
+    'firstName': firstName,
+    'lastName': lastName,
+    'avatar': avatar,
+    'containerColor': containerColor != null ? containerColor!.value : null,
+    'lastOnline': lastOnline?.millisecondsSinceEpoch,
+    'color': color != null ? color!.value : null,
+    'customProperties': customProperties,
+  };
 }

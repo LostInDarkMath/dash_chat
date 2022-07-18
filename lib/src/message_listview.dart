@@ -3,59 +3,58 @@ part of dash_chat;
 class MessageListView extends StatefulWidget {
   final List<ChatMessage> messages;
   final ChatUser user;
-  final bool showuserAvatar;
-  final DateFormat dateFormat;
-  final DateFormat timeFormat;
-  final bool showAvatarForEverMessage;
-  final Function(ChatUser) onPressAvatar;
-  final Function(ChatUser) onLongPressAvatar;
-  final bool renderAvatarOnTop;
-  final Function(ChatMessage) onLongPressMessage;
+  final bool? showUserAvatar;
+  final DateFormat? dateFormat;
+  final DateFormat? timeFormat;
+  final bool? showAvatarForEverMessage;
+  final Function(ChatUser)? onPressAvatar;
+  final Function(ChatUser)? onLongPressAvatar;
+  final bool? renderAvatarOnTop;
+  final Function(ChatMessage)? onLongPressMessage;
   final bool inverted;
-  final Widget Function(ChatUser) avatarBuilder;
-  final Widget Function(ChatMessage) messageBuilder;
-  final Widget Function(String, [ChatMessage]) messageTextBuilder;
-  final Widget Function(String, [ChatMessage]) messageImageBuilder;
-  final Widget Function(String, [ChatMessage]) messageTimeBuilder;
-  final Widget Function(String) dateBuilder;
-  final Widget Function() renderMessageFooter;
-  final BoxDecoration messageContainerDecoration;
+  final Widget Function(ChatUser)? avatarBuilder;
+  final Widget Function(ChatMessage)? messageBuilder;
+  final Widget Function(String?, ChatMessage)? messageTextBuilder;
+  final Widget Function(String?, ChatMessage)? messageImageBuilder;
+  final Widget Function(String, ChatMessage)? messageTimeBuilder;
+  final Widget Function(String)? dateBuilder;
+  final Widget Function()? renderMessageFooter;
+  final BoxDecoration? messageContainerDecoration;
   final List<MatchText> parsePatterns;
-  final ScrollController scrollController;
+  final ScrollController? scrollController;
   final EdgeInsets messageContainerPadding;
-  final Function changeVisible;
-  final bool visible;
-  final bool showLoadMore;
-  final bool shouldShowLoadEarlier;
-  final Widget Function() showLoadEarlierWidget;
-  final Function onLoadEarlier;
+  final Function? changeVisible;
+  final bool? visible;
+  final bool? showLoadMore;
+  final bool? shouldShowLoadEarlier;
+  final Widget Function()? showLoadEarlierWidget;
+  final Function? onLoadEarlier;
   final Function(bool) defaultLoadCallback;
-  final BoxConstraints constraints;
-  final List<Widget> Function(ChatMessage) messageButtonsBuilder;
+  final BoxConstraints? constraints;
+  final List<Widget> Function(ChatMessage)? messageButtonsBuilder;
   final EdgeInsets messagePadding;
   final bool textBeforeImage;
-  final double avatarMaxSize;
-  final BoxDecoration Function(ChatMessage, bool) messageDecorationBuilder;
+  final double? avatarMaxSize;
+  final BoxDecoration Function(ChatMessage, bool?)? messageDecorationBuilder;
 
-  MessageListView({
+  const MessageListView({
     this.showLoadEarlierWidget,
     this.avatarMaxSize,
     this.shouldShowLoadEarlier,
     this.constraints,
     this.onLoadEarlier,
-    this.defaultLoadCallback,
-    this.messageContainerPadding =
-        const EdgeInsets.only(top: 10.0, right: 10.0, left: 10.0),
+    required this.defaultLoadCallback,
+    this.messageContainerPadding = const EdgeInsets.only(top: 10.0, right: 10.0, left: 10.0),
     this.scrollController,
     this.parsePatterns = const [],
     this.messageContainerDecoration,
-    this.messages,
-    this.user,
-    this.showuserAvatar,
+    required this.messages,
+    required this.user,
+    this.showUserAvatar,
     this.dateFormat,
     this.timeFormat,
     this.showAvatarForEverMessage,
-    this.inverted,
+    required this.inverted,
     this.onLongPressAvatar,
     this.onLongPressMessage,
     this.onPressAvatar,
@@ -74,41 +73,39 @@ class MessageListView extends StatefulWidget {
     this.messagePadding = const EdgeInsets.all(8.0),
     this.textBeforeImage = true,
     this.messageDecorationBuilder,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
-  _MessageListViewState createState() => _MessageListViewState();
+  State<MessageListView> createState() => _MessageListViewState();
 }
 
 class _MessageListViewState extends State<MessageListView> {
-  double previousPixelPostion = 0.0;
+  double previousPixelPosition = 0.0;
 
   bool scrollNotificationFunc(ScrollNotification scrollNotification) {
-    double bottom =
-        widget.inverted ? 0.0 : scrollNotification.metrics.maxScrollExtent;
+    double bottom = widget.inverted ? 0.0 : scrollNotification.metrics.maxScrollExtent;
 
     if (scrollNotification.metrics.pixels == bottom) {
-      if (widget.visible) {
-        widget.changeVisible(false);
+      if (widget.visible!) {
+        widget.changeVisible!(false);
       }
     } else if ((scrollNotification.metrics.pixels - bottom).abs() > 100) {
-      if (!widget.visible) {
-        widget.changeVisible(true);
+      if (!widget.visible!) {
+        widget.changeVisible!(true);
       }
     }
     return true;
   }
 
   bool shouldShowAvatar(int index) {
-    if (widget.showAvatarForEverMessage) {
+    if (widget.showAvatarForEverMessage!) {
       return true;
     }
     if (!widget.inverted && index + 1 < widget.messages.length) {
-      return widget.messages[index + 1].user.uid !=
-          widget.messages[index].user.uid;
+      return widget.messages[index + 1].user.uid != widget.messages[index].user.uid;
     } else if (widget.inverted && index - 1 >= 0) {
-      return widget.messages[index - 1].user.uid !=
-          widget.messages[index].user.uid;
+      return widget.messages[index - 1].user.uid != widget.messages[index].user.uid;
     }
     return true;
   }
@@ -181,7 +178,7 @@ class _MessageListViewState extends State<MessageListView> {
                         children: <Widget>[
                           if (showCurrentDate)
                             DateBuilder(
-                              date: currentDate,
+                              date: currentDate!,
                               customDateBuilder: widget.dateBuilder,
                               dateFormat: widget.dateFormat,
                             ),
@@ -197,7 +194,7 @@ class _MessageListViewState extends State<MessageListView> {
                                   horizontal: constraints.maxWidth * 0.02,
                                 ),
                                 child: Opacity(
-                                  opacity: (widget.showAvatarForEverMessage ||
+                                  opacity: (widget.showAvatarForEverMessage! ||
                                               showAvatar) &&
                                           widget.messages[i].user.uid !=
                                               widget.user.uid
@@ -216,21 +213,20 @@ class _MessageListViewState extends State<MessageListView> {
                                 child: GestureDetector(
                                   onLongPress: () {
                                     if (widget.onLongPressMessage != null) {
-                                      widget.onLongPressMessage(
+                                      widget.onLongPressMessage!(
                                           widget.messages[i]);
                                     } else {
-                                      showBottomSheet(
+                                      showBottomSheet<void>(
                                           context: context,
-                                          builder: (context) => Container(
-                                                child: Column(
+                                          builder: (context) =>  Column(
                                                   mainAxisSize:
                                                       MainAxisSize.min,
                                                   children: <Widget>[
                                                     ListTile(
-                                                      leading: Icon(
+                                                      leading: constIcon(
                                                           Icons.content_copy),
-                                                      title: Text(
-                                                          "Copy to clipboard"),
+                                                      title: constText(
+                                                          'Copy to clipboard'),
                                                       onTap: () {
                                                         Clipboard.setData(
                                                             ClipboardData(
@@ -238,16 +234,16 @@ class _MessageListViewState extends State<MessageListView> {
                                                                     .messages[i]
                                                                     .text));
                                                         Navigator.pop(context);
-                                                      },
-                                                    )
-                                                  ],
-                                                ),
+
+                                                    },
+                                                  )
+                                                ],
                                               ));
                                     }
                                   },
                                   child: widget.messageBuilder != null
                                       ? widget
-                                          .messageBuilder(widget.messages[i])
+                                          .messageBuilder!(widget.messages[i])
                                       : Align(
                                           alignment: widget
                                                       .messages[i].user.uid ==
@@ -284,13 +280,13 @@ class _MessageListViewState extends State<MessageListView> {
                                         ),
                                 ),
                               ),
-                              if (widget.showuserAvatar)
+                              if (widget.showUserAvatar!)
                                 Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal: constraints.maxWidth * 0.02,
                                   ),
                                   child: Opacity(
-                                    opacity: (widget.showAvatarForEverMessage ||
+                                    opacity: (widget.showAvatarForEverMessage! ||
                                                 showAvatar) &&
                                             widget.messages[i].user.uid ==
                                                 widget.user.uid
@@ -306,7 +302,7 @@ class _MessageListViewState extends State<MessageListView> {
                                   ),
                                 )
                               else
-                                SizedBox(
+                                constSizedBox(
                                   width: 10.0,
                                 ),
                             ],
@@ -326,10 +322,10 @@ class _MessageListViewState extends State<MessageListView> {
                   height: 100.0,
                 ),
                 AnimatedPositioned(
-                  top: widget.showLoadMore ? 8.0 : -50.0,
-                  duration: Duration(milliseconds: 200),
+                  top: widget.showLoadMore! ? 8.0 : -50.0,
+                  duration: const Duration(milliseconds: 200),
                   child: widget.showLoadEarlierWidget != null
-                      ? widget.showLoadEarlierWidget()
+                      ? widget.showLoadEarlierWidget!()
                       : LoadEarlierWidget(
                           onLoadEarlier: widget.onLoadEarlier,
                           defaultLoadCallback: widget.defaultLoadCallback,

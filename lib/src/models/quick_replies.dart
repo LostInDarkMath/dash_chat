@@ -4,10 +4,10 @@ part of dash_chat;
 /// be shown to the user
 class QuickReplies {
   /// [List] of replies that will be shown to the user
-  List<Reply> values;
+  List<Reply>? values;
 
-  /// Should the quick replies be dismissable or persist
-  bool keepIt;
+  /// Should the quick replies be dismissible or persist
+  bool? keepIt;
 
   QuickReplies({
     this.keepIt,
@@ -15,25 +15,12 @@ class QuickReplies {
   });
 
   QuickReplies.fromJson(Map<dynamic, dynamic> json) {
-    keepIt = json['keepIt'] != null ? json['keepIt'] : null;
-
-    if (json['values'] != null) {
-      List<Reply> replies = List<Reply>();
-
-      for (var i = 0; i < json['values'].length; i++) {
-        replies.add(Reply.fromJson(json['values'][i]));
-      }
-
-      values = replies;
-    }
+    keepIt = json['keepIt'] as bool?;
+    values = [for(var x in json['values'] as List<dynamic>? ?? <dynamic>[]) Reply.fromJson(x as Map<String, dynamic>)];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
-
-    data['keepIt'] = keepIt;
-    data['values'] = values.map((e) => e.toJson()).toList();
-
-    return data;
-  }
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    'keepIt': keepIt,
+    'values': values!.map((e) => e.toJson()).toList(),
+  };
 }
