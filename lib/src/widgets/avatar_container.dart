@@ -11,12 +11,12 @@ class AvatarContainer extends StatelessWidget {
   /// [onPress] function take a function with this structure
   /// [Function(ChatUser)] will trigger when the avatar
   /// is tapped on
-  final Function(ChatUser)? onPress;
+  final void Function(ChatUser)? onPress;
 
   /// [onLongPress] function take a function with this structure
   /// [Function(ChatUser)] will trigger when the avatar
   /// is long pressed
-  final Function(ChatUser)? onLongPress;
+  final void Function(ChatUser)? onLongPress;
 
   /// [avatarBuilder] function take a function with this structure
   /// [Widget Function(ChatUser)] to build the avatar

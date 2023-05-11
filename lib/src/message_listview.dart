@@ -7,10 +7,10 @@ class MessageListView extends StatefulWidget {
   final DateFormat? dateFormat;
   final DateFormat? timeFormat;
   final bool? showAvatarForEverMessage;
-  final Function(ChatUser)? onPressAvatar;
-  final Function(ChatUser)? onLongPressAvatar;
+  final void Function(ChatUser)? onPressAvatar;
+  final void Function(ChatUser)? onLongPressAvatar;
   final bool? renderAvatarOnTop;
-  final Function(ChatMessage)? onLongPressMessage;
+  final void Function(ChatMessage)? onLongPressMessage;
   final bool inverted;
   final Widget Function(ChatUser)? avatarBuilder;
   final Widget Function(ChatMessage)? messageBuilder;
@@ -29,7 +29,7 @@ class MessageListView extends StatefulWidget {
   final bool? shouldShowLoadEarlier;
   final Widget Function()? showLoadEarlierWidget;
   final Function? onLoadEarlier;
-  final Function(bool) defaultLoadCallback;
+  final void Function(bool) defaultLoadCallback;
   final BoxConstraints? constraints;
   final List<Widget> Function(ChatMessage)? messageButtonsBuilder;
   final EdgeInsets messagePadding;

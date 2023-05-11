@@ -8,7 +8,7 @@ class LoadEarlierWidget extends StatelessWidget {
   }) : super(key: key);
 
   final Function? onLoadEarlier;
-  final Function(bool) defaultLoadCallback;
+  final void Function(bool) defaultLoadCallback;
 
   @override
   Widget build(BuildContext context) {

@@ -13,7 +13,7 @@ class ChatInputToolbar extends StatelessWidget {
   final bool alwaysShowSend;
   final ChatUser user;
   final Future<bool> Function(ChatMessage) onSend;
-  final Function(String) onTextChange;
+  final void Function(String) onTextChange;
   final bool inputDisabled;
   final String Function()? messageIdGenerator;
   final Widget Function(Function)? sendButtonBuilder;

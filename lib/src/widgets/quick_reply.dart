@@ -3,7 +3,7 @@ part of dash_chat;
 class QuickReply extends StatelessWidget {
   final Reply reply;
 
-  final Function(Reply)? onReply;
+  final void Function(Reply)? onReply;
 
   final BoxDecoration? quickReplyStyle;
 

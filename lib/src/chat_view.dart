@@ -107,17 +107,17 @@ class DashChat extends StatefulWidget {
   /// [onPressAvatar] function takes a function with this structure
   /// [Function(ChatUser)] will trigger when the avatar
   /// is tapped on
-  final Function(ChatUser)? onPressAvatar;
+  final void Function(ChatUser)? onPressAvatar;
 
   /// [onLongPressAvatar] function take a function with this structure
   /// [Function(ChatUser)] will trigger when the avatar
   /// is long pressed
-  final Function(ChatUser)? onLongPressAvatar;
+  final void Function(ChatUser)? onLongPressAvatar;
 
   /// [onLongPressMessage] function take a function with this structure
   /// [Function(ChatMessage)] will trigger when the message
   /// is long pressed.
-  final Function(ChatMessage)? onLongPressMessage;
+  final void Function(ChatMessage)? onLongPressMessage;
 
   /// Should the messages be shown in reversed order.
   final bool inverted;
@@ -197,7 +197,7 @@ class DashChat extends StatefulWidget {
 
   /// Callback method when the quickReply was tapped on
   /// will pass [Reply] as a parameter to function.
-  final Function(Reply)? onQuickReply;
+  final void Function(Reply)? onQuickReply;
 
   /// Padding for the quick reply area
   /// by default it padding is set 0.0
